@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>YouLi_upload</title>
+	<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+	<script src="js/jquery.ui.widget.js" type="text/javascript"></script>
+	<script src="js/jquery.fileupload.js" type="text/javascript"></script>
+  </head>
+  <body>
+	<span class="btn btn-success fileinput-button">
+		<i class="glyphicon glyphicon-plus"></i>
+		<span>Select files...</span>
+		<!-- The file input field used as target for the file upload widget -->
+		<input id="fileupload" type="file" name="files" multiple>
+	</span>
+	<br>
+	<!-- The global progress bar -->
+	<div id="progress" class="progress">
+		<div class="progress-bar progress-bar-success"></div>
+	</div>
+	<!-- The container for the uploaded files -->
+	<div id="files" class="files"></div>
+	<br>
+	 <script>
+		 $(function () {
+			 $('#fileupload').fileupload({
+				url: "/do_upload",
+				dataType: 'json',
+				done: function (e, data) {
+					console.log(data);
+					$('<p/>').text(data.src).appendTo('#files');
+				},
+				progressall: function (e, data) {
+				   var progress = parseInt(data.loaded / data.total * 100, 10);
+				   $('#progress .progress-bar').css(
+					   'width',
+					   progress + '%'
+				   );
+				}
+			}).prop('disabled', !$.support.fileInput)
+			.parent().addClass($.support.fileInput ? undefined : 'disabled');
+			});
+	 </script>
+  </body>
+</html>

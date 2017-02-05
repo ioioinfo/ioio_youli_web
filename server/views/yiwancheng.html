@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="right-nav">
+  <span>选择</span><span>图片</span><span>文字信息</span><span>操作</span>
+</div>
+<div class="warp">
+{% for project_info in rows %}
+  <div class="right-nav-height">
+	<span class="checkbox"><input type="checkbox" name="" value=""></span>
+	<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.main_image_url}}" alt=""></span>
+	<span class="ad">
+	  <p class="ad-word1">{{project_info.name}};{{project_info.xiangmuyoushi}}</p>
+	  <div class="ad-word2"><span class="money">{{project_info.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.fanli_bili}}%</span><span class="rebate1">推荐返利{{project_info.tuijian_fanli_bili}}%</span></p></div>
+	</span>
+	<div class="operation"><p>删除</p><p>编辑</p></div>
+  </div>
+{% endfor %}
+</div>
+<div class="right-bottom">
+  <p>
+	<span><a href="#">全选</a></span>
+	<span>/</span>
+	<span><a href="#">取消</a></span>
+	<span class="remove"><a href="#">删除</a></span>
+  </p>
+</div>
+{% endblock %}
