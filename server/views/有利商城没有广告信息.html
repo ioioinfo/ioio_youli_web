@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>有利商家后台管理</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"type="text/javascript"></script>
     <style media="screen">
-    *{
+     *{
        padding: 0;
        margin: 0;
      }
@@ -12,6 +13,7 @@
         min-width: 1024px;
         max-width: 1300px;
         margin: 0 auto;
+        position: relative;
       }
       li{
         list-style: none;
@@ -65,9 +67,12 @@
         line-height:40px;
 
       }
-      .bottom{
+    .bottom{
         width: 100%;
-        margin: 15px auto;
+        margin: 0 auto;
+      }
+      .bottom-ul-style{
+        background: #8f8d8f;
       }
       .bottom .bottom-ul a{
         display: block;
@@ -80,9 +85,14 @@
         font-size: 14px;
         height: 40px;
       }
-	  .bottom-ul-style {
-		background: #8f8d8f;
-	  }
+      .bottom .bottom-ul a li:first-child{
+        text-align: right;
+        padding-right: 15px;
+      }
+      .bottom .bottom-ul a li:last-child{
+        text-align: left;
+        padding-left: 15px;
+      }
       .bottom .bottom-ul .word2{
         line-height: 40px;
       }
@@ -98,8 +108,8 @@
         vertical-align: middle;
       }
       .bottom .bottom-ul a .word3{
-		  text-align: center;
-          line-height: 40px;
+        text-align: center;
+        line-height: 40px;
       }
       .bottom .bottom-ul a .word3 .number{
         width: 18px;
@@ -111,10 +121,6 @@
         line-height: 18px;
         display: inline-block;
       }
-	  .bottom .bottom-ul a li:last-child {
-		text-align: left;
-		padding-left: 15px;
-	 }
       .bottom .bottom-ul a .word3 .number span{
         color:#fff;
 
@@ -149,22 +155,19 @@
         font-weight: bold;
         border-radius: 4px;
       }
+
+      .hover{
+        border-bottom: 3px solid #e84e40;
+      }
       .right .list .list-ul li a p span{
         display: block;
         text-align: center;
         line-height: 20px;
       }
-	  .hover{
-		border-bottom: 3px solid #e84e40;
-	  }
       .right .list .list-ul .list-infor1 p{
         background: #da6e6b;
 
       }
-	  .bottom .bottom-ul a li:first-child {
-		text-align: right;
-		padding-right: 15px;
-	  }
       .right .list .list-ul .list-infor1 p span{
         line-height: 62px;
       }
@@ -223,6 +226,7 @@
         width: 50px;
         text-align: center;
         display: inline-block;
+        line-height: 118px;
       }
       .right-nav-height .adimg img{
         display: inline-block;
@@ -242,18 +246,15 @@
         vertical-align: middle;
       }
       .right-nav-height .ad .ad-word1{
-        width:736px;
+        width:756px;
         font-size: 12px;
         color: #646464;
         text-align: left;
-        line-height: 22px;
+        line-height: 25px;
         display: inline-block;
-        padding-left: 25px;
-		margin-top: 8px;
+        padding-left: 5px;
+        padding-top: 10px;
       }
-	  .right-nav-height .ad .ad-word1 img{
-		  vertical-align: middle;
-	  }
       .right-nav-height .ad .ad-word2{
         width:756px;
         font-size: 12px;
@@ -261,15 +262,15 @@
         overflow: hidden;
       }
       .right-nav-height .ad .ad-word2 .money{
-		  display: inline-block;
-	      color: #e51c23;
-	      line-height: 28px;
-	      text-indent: 25px;
+        color: #e51c23;
+        line-height: 48px;
+
       }
       .right-nav-height .ad .ad-word2 .rebate{
         display: inline-block;
         font-size: 12px;
         float: right;
+        margin-top: 17px;
       }
       .right-nav-height .ad .ad-word2 .rebate .rebate1{
         display: inline-block;
@@ -293,7 +294,6 @@
         font-size: 14px;
         margin: 15px auto;
         text-align: center;
-		cursor: pointer;
 
       }
       .right-nav-height .operation p:first-child{
@@ -332,7 +332,6 @@
         color: #ff4081;
       }
       .right .right-bottom p .remove{
-
         margin-left: 15px;
       }
       .warp{
@@ -340,7 +339,10 @@
         height: 476px;
         overflow: scroll;
         overflow-x:visible;
-
+      }
+      .warp .images{
+        margin-top: 100px;
+        margin-left: 462px;
       }
       .footer{
         width: 100%;
@@ -355,140 +357,88 @@
         margin: 0 15px;
 
       }
-	  .warp .images {
-	    margin-top: 100px;
-	    margin-left: 462px;
-	 }
-	  /*<!-- 确认金额 -->*/
-	 .weui_mask {
-		 position: fixed;
-		 z-index: 10;
-		 width: 100%;
-		 height: 100%;
-		 top: 0;
-		 left: 0;
-		 background: rgba(0, 0, 0, 0.6);
-	 }
-	 .weui_dialog {
-		 position: fixed;
-		 z-index: 13;
-		 width: 896px;
-		 top: 50%;
-		 left: 53%;
-		 -webkit-transform: translate(-50%, -50%);
-		 transform: translate(-50%, -50%);
-		 background-color: #FAFAFC;
-		 border-radius: 3px;
-		 overflow: hidden;
-		 width: 370px;
-		 height: 200px;
-	 }
-	 .get_jine{
-		 height: 75px;
-		 margin: 30px;
-		 font-size: 24px;
-	 }
-	 .jine{
-		 margin-left: 12px;
-		 width: 165px;
-		 padding: 2px;
-		 height: 24px;
-		 font-size: 16px;
-	 }
-	 .jine_button{
-		 width: 94px;
-		 font-size: 16px;
-		 height: 30px;
-		 float: left;
-		 line-height: 30px;
-		 border: 1px solid #CECECE;
-		 margin-left: 62px;
-		 cursor: pointer;
-		 text-align: center;
-	 }
 
-	 /*<!-- 弹出层填写相信信息 -->*/
-	 .ad-infor{
-	   width: 760px;
-	   height: 589px;
-	   overflow: auto;
-	   background: url(images/img-13.png) no-repeat 0 0;
-	   background-size: cover;
-	   position: absolute;
-	   top: 110px;
-	   left: 355px;
-	   display: none;
-	 }
-	 .ad-infor-next{
-	   margin-top: 20px;
-	 }
-	 .ad-infor-next .one{
-	   width: 100px;
-	   min-height: 28px;
-	   display: inline-block;
-	   font-size: 14px;
-	   color: #000;
-	   /*vertical-align: middle;*/
-	   text-indent: 15px;
-	 }
-	 .ad-infor-next .two{
-	   width: 530px;
-	   min-height: 28px;
-	   border: 1px solid #D9D9D9;
-	   display: inline-block;
-	   outline-style: none;
-	   overflow:hidden;
-	   vertical-align: middle;
-	   margin-left: 50px;
-	 }
-	 .ad-infor-next .three{
-	   width: 530px;
-	   min-height: 45px;
-	   border: 1px solid #D9D9D9;
-	   display: inline-block;
-	   outline-style: none;
-	   overflow:auto;
-	   vertical-align: middle;
-	   margin-left: 50px;
-	 }
-	 .ad-infor-next .four{
-	   width: 530px;
-	   display: inline-block;
-	   outline-style: none;
-	   font-size: 14px;
-	   padding: 5px 0 5px 5px;
-	   margin-left: 50px;
-	   vertical-align: middle;
-	   overflow:auto;
-	   background: #fff;
-	 }
-	 .ad-infor-next .five{
-	   width:85px;
-	   height: 35px;
-	   line-height: 35px;
-	   cursor: pointer;
-	 }
-	 .ad-infor-next .five-backgroung{
-	   background:transparent;
-	   border: 1px solid transparent;
-	   outline-style: none;
+      /*<!-- 弹出层填写相信信息 -->*/
+      .ad-infor{
+        width: 760px;
+        height: 700px;
+        overflow: auto;
+        background: url(images/img-13.png) no-repeat 0 0;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 270px;
+        display: none;
+      }
+      .ad-infor-next{
+        margin-top: 20px;
+      }
+      .ad-infor-next .one{
+        width: 100px;
+        min-height: 28px;
+        display: inline-block;
+        font-size: 14px;
+        color: #000;
+        /*vertical-align: middle;*/
+        text-indent: 15px;
+      }
+      .ad-infor-next .two{
+        width: 530px;
+        min-height: 28px;
+        border: 1px solid #D9D9D9;
+        display: inline-block;
+        outline-style: none;
+        overflow:hidden;
+        vertical-align: middle;
+        margin-left: 50px;
+      }
+      .ad-infor-next .three{
+        width: 530px;
+        min-height: 45px;
+        border: 1px solid #D9D9D9;
+        display: inline-block;
+        outline-style: none;
+        overflow:auto;
+        vertical-align: middle;
+        margin-left: 50px;
+      }
+      .ad-infor-next .four{
+        width: 530px;
+        display: inline-block;
+        outline-style: none;
+        font-size: 14px;
+        padding: 5px 0 5px 5px;
+        margin-left: 50px;
+        vertical-align: middle;
+        overflow:auto;
+        background: #fff;
+      }
+      .ad-infor-next .five{
+        width:85px;
+        height: 35px;
+        line-height: 35px;
+        cursor: pointer;
+      }
+      .ad-infor-next .five-backgroung{
+        background:transparent;
+        border: 1px solid transparent;
+        outline-style: none;
 
-	 }
-	 .float-right{
-	   float: right;
-	   margin-right: 70px;
-	   margin-bottom: 35px;
+      }
+      .float-right{
+        float: right;
+        margin-right: 70px;
+        margin-bottom: 35px;
 
-	 }
-	 .zero{
-	   font-size: 18px;
-	   color: #000;
-	   text-align: center;
-	   padding: 15px 0;
-	 }
+      }
+      .zero{
+        font-size: 18px;
+        color: #000;
+        text-align: center;
+        padding: 15px 0;
+      }
+
     </style>
-	{% block style %}
-	{% endblock %}
   </head>
   <body>
     <div class="top">
@@ -498,41 +448,34 @@
             <img src="images/header.png" alt="">
           </div>
           <div class="header-right">
-            <p>{{results.login_user.name}}</p>
-            <p>{{results.tenant_info.code}}</p>
+            <p>李小二</p>
+            <p>0527</p>
           </div>
         </div>
         <div class="bottom">
-          <ul class="bottom-ul fan1">
-            <a href="/daiqueren">
+          <ul class="bottom-ul">
+            <a href="#">
               <li class="word1"><img src="images/img-02.png" alt=""></li>
               <li class="word2">返利申请</li>
-              <li class="word3">{% if results.subscribes_num_info.daiqueren %}<p class="number"><span>{{results.subscribes_num_info.daiqueren}}</span></p>{% endif %}</li>
+              <li class="word3"><p class="number"><span>99</span></p></li>
             </a>
           </ul>
-		  <ul class="bottom-ul fan2">
-			<a href="/yiqueren">
-			  <li class="word1"><img src="images/img-01.png" alt=""></li>
-			  <li class="word2">确认返利</li>
-			  <li class="word3"></li>
-			</a>
-		  </ul>
-          <ul class="bottom-ul fan3">
-            <a href="/yiwancheng">
+          <ul class="bottom-ul">
+            <a href="#">
               <li class="word1"><img src="images/img-01.png" alt=""></li>
               <li class="word2">返利成功</li>
               <li class="word3"></li>
             </a>
           </ul>
-          <ul class="bottom-ul fan4">
-            <a href="/shensuzhong">
+          <ul class="bottom-ul">
+            <a href="#">
               <li class="word1"><img src="images/img-03.png" alt=""></li>
               <li class="word2">客户申诉</li>
-              <li class="word3">{% if results.subscribes_num_info.shensuzhong %}<p class="number"><span>{{results.subscribes_num_info.shensuzhong }}</span></p>{% endif %}</li>
+              <li class="word3"><p class="number"><span>3</span></p></li>
             </a>
           </ul>
-          <ul class="bottom-ul fan5">
-            <a href="/fanli_tongji">
+          <ul class="bottom-ul">
+            <a href="#">
               <li class="word1"><img src="images/img-04.png" alt=""></li>
               <li class="word2">返利统计</li>
               <li class="word3"></li>
@@ -543,31 +486,114 @@
       <div class="right">
         <div class="list">
           <ul class="list-ul">
-            <li class="list-infor1"><a href="/add_project"><p><span>创建项目</span></p></a></li>
-            <li class="list-infor2 infor"><a href="/customer_order"><p><span>客户预约</span><span>共{{results.subscribes_num_info.yiyuyue || 0}}条</span></p></a></li>
-            <li class="list-infor3 infor"><a href="/unshelve_projects"><p><span>未上架</span><span>共{{results.project_num_info.edit || 0}}条</span></p></a></li>
-            <li class="list-infor4 infor"><a href="/shelve_projects"><p><span>待审核</span><span>共{{results.project_num_info.shelve || 0}}条</span></p></a></li>
-            <li class="list-infor5 infor"><a href="/approve_projects"><p><span>已发布</span><span>共{{results.project_num_info.approve || 0}}条</span></p></a></li>
-            <li class="list-infor6"><a href="/tenant"><p><span>商家信息</span></p></a></li>
+            <li class="list-infor1"><a href="#"><p><span>创建项目</span></p></a></li>
+            <li class="list-infor2 infor"><a href="#"><p><span>客户预约</span><span>共1条</span></p></a></li>
+            <li class="list-infor3 infor"><a href="#"><p><span>未上架</span><span>共2条</span></p></a></li>
+            <li class="list-infor4 infor"><a href="#"><p><span>待审核</span><span>共3条</span></p></a></li>
+            <li class="list-infor5 infor"><a href="#"><p><span>已审核</span><span>共4条</span></p></a></li>
+            <li class="list-infor6"><a href="#"><p><span>商家信息</span></p></a></li>
+
           </ul>
         </div>
-		{% block content %}
-		{% endblock %}
+        <div class="right-nav">
+          <span>选择</span><span>图片</span><span>文字信息</span><span>操作</span>
+        </div>
+        <div class="warp">
+          <img src="images/img-12.png" alt="" class="images">
+        </div>
+        <div class="right-bottom">
+          <p>
+            <span><a href="#">全选</a></span>
+            <span>/</span>
+            <span><a href="#">取消</a></span>
+            <span class="remove"><a href="#">删除</a></span>
+          </p>
+        </div>
       </div>
     </div>
     <div class="footer">
       <span>有利商城客户后台管理</span>
       <span>上海佑佑信息科技有限公司开发</span>
     </div>
-	<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
-	<script src="js/jquery.ui.widget.js" type="text/javascript"></script>
-	<script src="js/jquery.fileupload.js" type="text/javascript"></script>
-	{% block script %}
-	<script>
-		$(function() {
 
-		});
-	</script>
-	{% endblock %}
+    <!-- 弹出层填写相信信息 -->
+    <div class="ad-infor">
+      <p class="zero">新建项目</p>
+      <div class="ad-infor-next">
+        <p class="one">编号</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">名称</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">价格</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">返回比例</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">推荐返回比例</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">推荐返回比例</p><textarea class="three"></textarea>
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">联系电话</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">项目描述</p><textarea class="three"></textarea>
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">预订人数</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">推荐人数</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">返利描述</p><textarea class="three"></textarea>
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">项目优势</p><textarea class="three"></textarea>
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">返利方式</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">推荐返利金额</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">地址</p><input type="text" name="" value="" class="two">
+      </div>
+      <div class="ad-infor-next">
+        <p class="one">上传图片</p><input type="file" name="" value="" class="four" multiple>
+      </div>
+      <div class="ad-infor-next float-right">
+        <input type="submit" name="" value="取消" class="five five-backgroung">
+        <input type="submit" name="" value="预览" class="five">
+        <input type="submit" name="" value="保存" class="five">
+        <input type="submit" name="" value="提交" class="five">
+      </div>
+    </div>
+
+
+    <script type="text/javascript">
+      $(function(){
+        $(".list-ul li").click(function(){
+
+          $(this).addClass("hover").siblings().removeClass("hover").siblings().addClass("style");
+          $(".bottom-ul").removeClass("bottom-ul-style");
+
+        })
+        $(".bottom-ul").click(function(){
+          $(this).addClass("bottom-ul-style").siblings().removeClass("bottom-ul-style");
+          $(".list-ul li").removeClass("hover");
+        })
+        $(".list-ul .list-infor1 p").click(function(){
+          $(".ad-infor").css("display","block");
+
+        })
+      })
+    </script>
+
   </body>
 </html>

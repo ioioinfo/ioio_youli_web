@@ -1,0 +1,130 @@
+{% extends 'layout.html' %}
+{% block content %}
+<!-- 弹出层填写相信信息 -->
+<div class="ad-infor">
+  <p class="zero">新建项目</p>
+  <!-- 编号 显示 带* 临时
+		名称
+		价格
+		电话
+		地址
+		返利方式 选% 固定值 切换
+		返利比例
+		返利金额
+
+		推荐返利方式
+		推荐返利比
+		推荐返利金额
+
+		项目优势
+		项目描述
+		图片 -->
+  <div class="ad-infor-next">
+	<p class="one">编号(自动)</p><input type="text" name="" value="*001" class="two code" readonly>
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">名称</p><input type="text" name="" value="" class="two name">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">价格</p><input type="text" name="" value="" class="two price">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">联系电话</p><input type="text" name="" value="" class="two phone">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">地址</p><input type="text" name="" value="" class="two address">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">返利方式</p>
+	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="" checked/>百分比 </label>
+	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value=""/>固定金额 </label>
+  </div>
+
+  <div class="ad-infor-next">
+	<p class="one">返利比例</p><input type="text" name="" value="" class="two fan_precent">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">返利金额</p><input type="text" name="" value="" class="two fan_jine">
+  </div>
+
+  <div class="ad-infor-next">
+	<p class="one">推荐返利方式</p>
+	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_way" type="radio" value="" checked/>百分比 </label>
+	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_way" type="radio" value=""/>固定金额 </label>
+  </div>
+
+  <div class="ad-infor-next">
+	<p class="one">推荐返利比例</p><input type="text" name="" value="" class="two tuijian_precent">
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">推荐返利金额</p><input type="text" name="" value="" class="two tuijian_jine">
+  </div>
+
+  <div class="ad-infor-next">
+  <p class="one">项目优势</p><textarea class="three item_advantage"></textarea>
+  </div>
+  <div class="ad-infor-next">
+	<p class="one">项目描述</p><textarea class="three item_describe"></textarea>
+  </div>
+
+  <div class="ad-infor-next">
+	<p class="one">上传图片</p><input type="file" name="files" value="" class="four image" id="fileupload" multiple>
+  </div>
+  <div class="ad-infor-next float-right">
+	<input type="submit" name="" value="取消" class="five five-backgroung" id="add_cancel">
+	<input type="submit" name="" value="预览" class="five">
+	<input type="submit" name="" value="保存" class="five" id="save">
+	<input type="submit" name="" value="提交" class="five">
+  </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+	$(".list-infor1").addClass("hover");
+	$(".ad-infor").css("display","block");
+	$(".name").focus();
+	$("#add_cancel").click(function(){
+		location.href ="/add_project";
+	});
+
+	$("#save").click(function(){
+		var code = $(".code").val();
+		var name = $(".name").val();
+		var price = $(".price").val();
+		var fan_precent = $(".fan_precent").val();
+		var tuijian_precent = $(".tuijian_precent").val();
+		var phone = $(".phone").val();
+		var item_describe = $(".item_describe").val();
+		var fan_describe = $(".fan_describe").val();
+		var item_advantage = $(".item_advantage").val();
+		var fan_way = $(".fan_way").val();
+		var tuijian_jine = $(".tuijian_jine").val();
+		if (!name) {
+			alert("名称必填！")
+			return;
+		}else if (true) {
+
+		}
+	});
+
+	$('#fileupload').fileupload({
+	   url: "/do_upload",
+	   dataType: 'json',
+	   done: function (e, data) {
+		   console.log(data);
+		   alert("src :"+data._response.result.src);
+		   $('<p/>').text(data._response.result.src).appendTo('#fileupload');
+	   },
+	   progressall: function (e, data) {
+		  var progress = parseInt(data.loaded / data.total * 100, 10);
+		  $('#progress .progress-bar').css(
+			  'width',
+			  progress + '%'
+		  );
+	   } }).prop('disabled', !$.support.fileInput)
+	.parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>
+{% endblock %}

@@ -74,28 +74,23 @@ var get_tenant_info = function(id,cb){
 	var url = youli_service + "/shop/profile?tenant_id=" + id;
 	do_get_method(url,cb);
 };
-//获取商家预约信息
-var get_order_infos = function(id,cb){
-	var url = youli_service + "/shop/orders/daiqueren?tenant_id=" + id;
-	do_get_method(url,cb);
-};
 //待确认信息
 var daiqueren = function(id,cb){
 	var url = youli_service + "/shop/orders/daiqueren?tenant_id=" + id;
 	do_get_method(url,cb);
 };
 //获取商家已确认信息
-var make_sure_infos = function(id,cb){
+var yiqueren = function(id,cb){
 	var url = youli_service + "/shop/orders/yiqueren?tenant_id=" + id;
 	do_get_method(url,cb);
 };
 //获取商家已完成项目
-var finish_project_infos = function(id,cb){
+var yiwancheng = function(id,cb){
 	var url = youli_service + "/shop/orders/yiwancheng?tenant_id=" + id;
 	do_get_method(url,cb);
 };
 //获取商家申诉项目
-var appeal_project_infos = function(id,cb){
+var shensuzhong = function(id,cb){
 	var url = youli_service + "/shop/orders/shensuzhong?tenant_id=" + id;
 	do_get_method(url,cb);
 };
@@ -283,7 +278,7 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var id = get_cookie_id(request);
-				get_order_infos(id, function(err,rows){
+				daiqueren(id, function(err,rows){
 					if (!err) {
 						if (rows.success) {
 							console.log(rows);
@@ -467,6 +462,193 @@ exports.register = function(server, options, next){
 		//商家已确认
 		{
 			method: 'GET',
+			path: '/yiqueren',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						yiqueren(id, function(err,rows){
+							console.log("rows:"+JSON.stringify(rows));
+							if (!err) {
+								if (rows.success) {
+									console.log(rows);
+									return reply.view("yiqueren",{"rows":rows.rows,"results":results,"service_info":service_info});
+								}else {
+									return reply({"success":false,"message":"search wrong","service_info":service_info});
+								}
+							}else {
+								return reply({"success":false,"message":"search wrong","service_info":service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//商家已完成列表
+		{
+			method: 'GET',
+			path: '/yiwancheng',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						yiwancheng(id, function(err,rows){
+							console.log("rows:"+JSON.stringify(rows));
+							if (!err) {
+								if (rows.success) {
+									console.log(rows);
+									return reply.view("yiwancheng",{"rows":rows.rows,"results":results,"service_info":service_info});
+								}else {
+									return reply({"success":false,"message":"search wrong","service_info":service_info});
+								}
+							}else {
+								return reply({"success":false,"message":"search wrong","service_info":service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//商家申诉列表
+		{
+			method: 'GET',
+			path: '/shensuzhong',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						shensuzhong(id, function(err,rows){
+							console.log("rows:"+JSON.stringify(rows));
+							if (!err) {
+								if (rows.success) {
+									console.log(rows);
+									return reply.view("shensuzhong",{"rows":rows.rows,"results":results,"service_info":service_info});
+								}else {
+									return reply({"success":false,"message":"search wrong","service_info":service_info});
+								}
+							}else {
+								return reply({"success":false,"message":"search wrong","service_info":service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//返利统计
+		{
+			method: 'GET',
+			path: '/fanli_tongji',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						return reply.view("fanli_tongji",{"results":results,"service_info":service_info});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//商家信息
+		{
+			method: 'GET',
+			path: '/tenant',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						get_tenant_info(id, function(err,row){
+							if (!err) {
+								if (row.success) {
+									console.log(row);
+									return reply.view("tenant",{"row":row.row,"results":results,"service_info":service_info});
+								}else {
+									return reply({"success":false,"message":"search wrong","service_info":service_info});
+								}
+							}else {
+								return reply({"success":false,"message":"search wrong","service_info":service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//项目新增
+		{
+			method: 'GET',
+			path: '/add_project',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						return reply.view("add_project",{"results":results,"service_info":service_info});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//清空cookie 退出
+		{
+			method: 'GET',
+			path: '/logout',
+			handler: function(request, reply){
+				return reply.redirect("/login").state('cookie', {});
+			}
+		},
+		//商家已确认
+		{
+			method: 'GET',
 			path: '/make_sure_infos',
 			handler: function(request, reply){
 				var cookie_id = get_cookie_id(request);
@@ -474,7 +656,7 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var id = get_cookie_id(request);
-				make_sure_infos(id, function(err,rows){
+				yiqueren(id, function(err,rows){
 					if (!err) {
 						if (rows.success) {
 							console.log(rows);
@@ -498,7 +680,7 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var id = get_cookie_id(request);
-				finish_project_infos(id, function(err,rows){
+				yiwancheng(id, function(err,rows){
 					if (!err) {
 						if (rows.success) {
 							console.log(rows);
@@ -522,7 +704,7 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var id = get_cookie_id(request);
-				appeal_project_infos(id, function(err,rows){
+				shensuzhong(id, function(err,rows){
 					if (!err) {
 						if (rows.success) {
 							console.log(rows);
@@ -536,6 +718,31 @@ exports.register = function(server, options, next){
 				});
 			}
 		},
+		//项目保存
+		{
+			method: 'POST',
+			path: '/save_project',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var data = {};
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						return reply.view("add_project",{"results":results,"service_info":service_info});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+
+
 		//商家项目查看
 		{
 			method: 'GET',
@@ -706,6 +913,7 @@ exports.register = function(server, options, next){
 				   parse: true //or just remove this line since true is the default
 				},
 				handler:function (request, reply) {
+					console.log("payload:"+JSON.stringify(request.payload));
 					var filepath = request.payload.files.path;
 					var out_name = path.extname(request.payload.files.filename);
 					console.log("payload:"+JSON.stringify(request.payload));
@@ -719,21 +927,6 @@ exports.register = function(server, options, next){
 					});
 				}
 			},
-		},
-
-
-
-		//创建项目
-		{
-			method: 'POST',
-			path: '/add_project',
-			handler: function(request, reply){
-				var cookie_id = get_cookie_id(request);
-				if (!cookie_id) {
-					return reply.redirect("/login");
-				}
-				return reply.view("pc_login").state('cookie', cookie, {ttl:10*365*24*60*60*1000});
-			}
 		},
 
 	]);

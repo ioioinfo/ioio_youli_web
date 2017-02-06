@@ -114,16 +114,20 @@
     </div>
 	<script>
 	$(function() {
+		$("#tenant_code").focus();
 		$(".submit").click(function(){
 			var username = $("#username").val();
 			var password = $ ("#password").val();
 			var tenant_code = $ ("#tenant_code").val();
 			if (!username) {
 				alert("用户名必填！");
+				return;
 			}else if (!password) {
-				alert("密码必填！")
+				alert("密码必填！");
+				return;
 			}else if (!tenant_code) {
-				alert("商家编号必填！")
+				alert("商家编号必填！");
+				return;
 			}
 			$.post("/do_login",{"username":username,"password":password,"tenant_code":tenant_code},function(data){
 				if (data.success) {

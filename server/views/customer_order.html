@@ -1,22 +1,213 @@
 {% extends 'layout.html' %}
+{% block style %}
+<style media="screen">
+
+
+
+	.right-nav span:first-child{
+	  width: 272px;
+	}
+	.right-nav span:nth-child(3n+2){
+	  width: 122px;
+	}
+	.right-nav span:last-child{
+	  width: 656px;
+	}
+
+
+	/*预约人信息*/
+
+	.right-nav-height .checkbox{
+	  width: 272px;
+	  text-align: left;
+	}
+	.right-nav-height .checkbox span{
+	  font-size: 12px;
+	  color: #646464;
+	  line-height: 18px;
+	}
+	.right-nav-height .checkbox .checkbox-p1 {
+	  display: inline-block;
+	  width: 80px;
+	  height: 80px;
+	}
+	.right-nav-height .checkbox .checkbox-p2 {
+	  display: inline-block;
+	  width: 160px;
+
+	  vertical-align: middle;
+	}
+
+	.right-nav-height .checkbox .checkbox-p2 span:first-child{
+	  width: 160px;
+	  display: inline-block;
+
+	}
+	.right-nav-height .checkbox .checkbox-p2 span:nth-child(4n+2){
+	  width: 160px;
+	  display: inline-block;
+
+	}
+	.right-nav-height .checkbox .checkbox-p2 span:nth-child(4n+3){
+	  width: 160px;
+	  display: inline-block;
+
+	}
+	.right-nav-height .checkbox .checkbox-p2 span:last-child{
+	  width: 160px;
+	  display: inline-block;
+	  /*padding-top: 20px;*/
+	}
+	.right-nav-height .checkbox p img{
+	  width: 80px;
+	  height: 80px;
+	  vertical-align: middle;
+	}
+	.right-nav-height .adimg img{
+	  display: inline-block;
+	  width: 122px;
+	  height: 90px;
+	  vertical-align: middle;
+	}
+	.right-nav-height .adimg{
+	  width: 122px;
+	  height: 90px;
+	  display: inline-block;
+	}
+	.right-nav-height .ad{
+	  width:656px;
+	  height: 118px;
+	  display: inline-block;
+	  vertical-align: middle;
+	}
+	.right-nav-height .ad .ad-word1{
+	  width:636px;
+	  font-size: 12px;
+	  color: #646464;
+	  text-align: left;
+	  line-height: 20px;
+	  display: inline-block;
+	  padding-top: 25px;
+	  padding-left: 25px;
+
+	}
+	.right-nav-height .ad .ad-word2{
+	  width:656px;
+	  font-size: 12px;
+	  display: inline-block;
+	  overflow: hidden;
+	}
+	.right-nav-height .ad .ad-word2 .money{
+	  display: inline-block;
+	  color: #e51c23;
+	  line-height: 48px;
+	  text-indent: 20px;
+	}
+	.right-nav-height .ad .ad-word2 .rebate{
+	  display: inline-block;
+	  font-size: 12px;
+	  float: right;
+	  margin-top: 17px;
+	}
+	.right-nav-height .ad .ad-word2 .rebate .rebate1{
+	  display: inline-block;
+	  width: 78px;
+	  border: 1px solid #646464;
+	  text-align: center;
+	  margin-right: 10px;
+	  color: #646464;
+	}
+	.right-nav-height .operation{
+	  display: inline-block;
+	  width: 122px;
+	  height: 118px;
+	  vertical-align: middle;
+	}
+	.right-nav-height .operation p{
+
+	  width: 60px;
+	  height: 26px;
+	  line-height: 26px;
+	  font-size: 14px;
+	  margin: 15px auto;
+	  text-align: center;
+
+	}
+	.right-nav-height .operation p:first-child{
+	  background: #ffa726;
+	  border-radius: 4px;
+
+	}
+	.right-nav-height .operation p:last-child{
+	  background: #ab47bc;
+	  border-radius: 4px;
+	  margin-top: 15px;
+	}
+	.right .right-bottom{
+	  width: 96%;
+	  margin: 0 auto;
+	  height: 46px;
+	  line-height: 46px;
+	  text-align: right;
+	  background: #eff2f7;
+	}
+	.right .right-bottom p{
+	  display: inline-block;
+	  margin-right: 40px;
+	}
+	.right .right-bottom p span a{
+	  font-size: 12px;
+	  color: #03a9f4;
+	}
+	.right .right-bottom p span{
+	  font-size: 12px;
+	  color: #03a9f4;
+	  display: inline-block;
+	  margin-right: 5px;
+	}
+	.right .right-bottom p .remove a{
+	  color: #ff4081;
+	}
+	.right .right-bottom p .remove{
+
+	  margin-left: 15px;
+	}
+	.footer{
+	  width: 100%;
+	  height: 25px;
+	  background: #d1e1eb;
+	  text-align: center;
+	}
+	.footer span{
+	  font-size: 12px;
+	  color: #b0b8bb;
+	  display: inline-block;
+	  margin: 0 15px;
+
+	}
+</style>
+{% endblock %}
 {% block content %}
 <div class="right-nav">
-  <span>选择</span><span>图片</span><span>文字信息</span><span>操作</span>
+  <span>预约详情</span><span>图片</span><span>文字信息</span>
 </div>
 <div class="warp">
 {% if rows.length ==0 %}
 	<img class="images" src="images/img-12.png" alt="">
 {% else %}
 	{% for project_info in rows %}
+<!-- &nbsp;{{project_info.wx_user.nickname}}&nbsp;{{project_info.subscribe_time_text}} -->
 	  <div class="right-nav-height">
-		<span class="checkbox"><input type="checkbox" name="" value=""></span>
+		<span class="checkbox">
+		  <p class="checkbox-p1"><img src="{{project_info.wx_user.headimgurl}}" alt=""></p>
+		  <p class="checkbox-p2"><span>预约人：{{project_info.wx_user.name}}</span><span>电话：{{project_info.wx_user.mobile}}</span>{% if project_info.recommender_wx_user %}<span>推荐人：{{project_info.recommender_wx_user.name}}</span><span>电话：{{project_info.recommender_wx_user.mobile}}</span>{% endif %}</p>
+	   </span>
 		<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.project.main_image_url}}" alt=""></span>
 		<span class="ad">
-		  <p class="ad-word1">{{project_info.wx_user.nickname}} {{project_info.project.name}}</p>
-		  <img src="{{project_info.wx_user.headimgurl}}" width="30px" alt=""/>
-		  <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_bili}}%</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_bili}}%</span></p></div>
+		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}}</p>
+		  <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
-		<div class="operation"><p>删除</p><p>编辑</p></div>
+
 	  </div>
 	{% endfor %}
 {% endif %}

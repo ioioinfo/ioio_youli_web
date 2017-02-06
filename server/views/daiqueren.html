@@ -12,13 +12,27 @@
 		<span class="checkbox"><input type="checkbox" name="" value=""></span>
 		<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.project.main_image_url}}" alt=""></span>
 		<span class="ad">
-		  <p class="ad-word1">{{project_info.project.name}};{{project_info.project.xiangmuyoushi}}</p>
-		  <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
+		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
+		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
+		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
+		    <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
-		<div class="operation"><p>删除</p><p>编辑</p></div>
+		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p>拒绝</p></div>
 	  </div>
 	{% endfor %}
 {% endif %}
+</div>
+<div class="jine_info" style="display:none;">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+	  <div class="get_jine">
+		  <span>&nbsp;</span> <input class="jine" type="text" value="" placeholder="请输入返利金额"/>
+	  </div>
+	  <div>
+		  <div class="jine_button" id="jine_enter">确定</div>
+		  <div class="jine_button" id="jine_cancel">取消</div>
+	  </div>
+  </div>
 </div>
 <div class="right-bottom">
   <p>
@@ -33,6 +47,30 @@
 <script>
 	$(function() {
 		$(".fan1").addClass("bottom-ul-style");
+		$(".sure").click(function(){
+			var project_subscribe_id = $(this).data("id");
+			$(".jine_info").removeAttr("style");
+			$(".jine").focus();
+
+			$("#jine_enter").click(function(){
+				var contract_amount = $(".jine").val();
+				if (!contract_amount) {
+					alert("请输入返利金额！");
+					return;
+				}
+				$.post("/confirm_order",{"contract_amount":contract_amount,"project_subscribe_id":project_subscribe_id},function(data){
+					if (data.success) {
+						alert("操作成功！");
+						location.href ="/daiqueren";
+					}else {
+						alert("操作失败！");
+					}
+				})
+			});
+			$("#jine_cancel").click(function(){
+				$(".jine_info").attr("style","display:none;");
+			});
+		});
 	});
 </script>
 {% endblock %}

@@ -9,7 +9,7 @@
 {% else %}
 	{% for project_info in rows %}
 	  <div class="right-nav-height">
-	    <span class="checkbox"></span>
+		<span class="checkbox"></span>
 		<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.project.main_image_url}}" alt=""></span>
 		<span class="ad">
 		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
@@ -34,7 +34,7 @@
 {% block script %}
 <script>
 	$(function() {
-		$(".fan3").addClass("bottom-ul-style");
+		$(".fan2").addClass("bottom-ul-style");
 	});
 </script>
 {% endblock %}

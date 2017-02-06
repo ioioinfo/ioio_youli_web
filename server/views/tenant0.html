@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<div class="warp">
+		 <div class="right-nav-height">
+			<div class="ad">
+				<div class="ad-word2">公司名称：{{row.name}}</div>
+				<div class="ad-word2">行业领域：{{row.hangye_name}}</div>
+				<div class="ad-word2">申请日期：{{row.shenqingriqi}}</div>
+				<a class="ad-word2" href="/logout">退出登入</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+<script>
+	$(function() {
+		$(".list-infor6").addClass("hover");
+	});
+</script>
+{% endblock %}

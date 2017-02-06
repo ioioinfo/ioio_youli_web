@@ -12,10 +12,12 @@
 		<span class="checkbox"><input type="checkbox" name="" value=""></span>
 		<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.main_image_url}}" alt=""></span>
 		<span class="ad">
-		  <p class="ad-word1">{{project_info.name}};{{project_info.xiangmuyoushi}}</p>
+		  <p class="ad-word1">{{project_info.name}} &nbsp;(&nbsp;{{project_info.xiangmuyoushi}}&nbsp;)&nbsp;电话：{{project_info.phone}}</p>
+		   <p class="ad-word1">{{project_info.address}}</p>
 		  <div class="ad-word2"><span class="money">{{project_info.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.tuijian_fanli_text}}</span></p></div>
 		</span>
-		<div class="operation"><p>删除</p><p>编辑</p></div>
+		
+		<div class="operation"><p class="shelve" data-id="{{project_info.id}}">上架</p><p>编辑</p></div>
 	  </div>
 	{% endfor %}
  {% endif %}
@@ -34,6 +36,17 @@
 <script>
 	$(function() {
 		$(".list-infor3").addClass("hover");
+		$(".shelve").click(function(){
+			var project_id = $(this).data("id");
+			$.post("/up_project",{"project_id":project_id},function(data){
+				if (data.success) {
+					alert("上架成功！");
+					location.href ="/unshelve_projects";
+				}else {
+
+				}
+			});
+		});
 	});
 </script>
 {% endblock %}
