@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="right-nav">
-  <span>&nbsp;</span><span>图片</span><span>文字信息</span>
+  <span>&nbsp;</span><span>图片</span><span class="word-information">文字信息</span>
 </div>
 <div class="warp">
 {% if rows.length ==0 %}
@@ -21,14 +21,6 @@
 	  </div>
 	{% endfor %}
 {% endif %}
-</div>
-<div class="right-bottom">
-  <p>
-	<span><a href="#">全选</a></span>
-	<span>/</span>
-	<span><a href="#">取消</a></span>
-	<span class="remove"><a href="#">删除</a></span>
-  </p>
 </div>
 {% endblock %}
 {% block script %}

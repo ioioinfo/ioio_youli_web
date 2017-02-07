@@ -26,14 +26,15 @@
   <div class="weui_mask"></div>
   <div class="weui_dialog">
 	  <div class="get_jine">
-		  <span>&nbsp;</span> <input class="jine" type="text" value="" placeholder="请输入返利金额"/>
+		  <input class="jine" type="text" value="" placeholder="请输入消费金额"/>
 	  </div>
 	  <div>
-		  <div class="jine_button" id="jine_enter">确定</div>
 		  <div class="jine_button" id="jine_cancel">取消</div>
+		  <div class="jine_button" id="jine_enter">确定</div>
 	  </div>
   </div>
 </div>
+{% if rows.length >0 %}
 <div class="right-bottom">
   <p>
 	<span><a href="#">全选</a></span>
@@ -42,6 +43,7 @@
 	<span class="remove"><a href="#">删除</a></span>
   </p>
 </div>
+{% endif %}
 {% endblock %}
 {% block script %}
 <script>
@@ -55,7 +57,7 @@
 			$("#jine_enter").click(function(){
 				var contract_amount = $(".jine").val();
 				if (!contract_amount) {
-					alert("请输入返利金额！");
+					alert("请输入消费金额！");
 					return;
 				}
 				$.post("/confirm_order",{"contract_amount":contract_amount,"project_subscribe_id":project_subscribe_id},function(data){

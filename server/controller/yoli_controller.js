@@ -919,7 +919,8 @@ exports.register = function(server, options, next){
 					console.log("payload:"+JSON.stringify(request.payload));
 					fs.readFile(filepath, function (err, data) {
 						var filename = uuidV1() + out_name;
-						var newPath = __dirname + '/' + filename;
+						var newPath = "public/images/" +filename;
+						// var newPath = __dirname + '/' + filename;
 						console.log(newPath);
 						fs.writeFile(newPath, data, function (err) {
 							return reply({"src":filename});
