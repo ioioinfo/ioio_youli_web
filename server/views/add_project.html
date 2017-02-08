@@ -1,163 +1,295 @@
 {% extends 'layout.html' %}
 {% block content %}
 <!-- 弹出层填写相信信息 -->
-<div class="ad-infor">
-  <!-- 编号 显示 带* 临时
-		名称
-		价格
-		电话
-		地址
-		返利方式 选% 固定值 切换
-		返利比例
-		返利金额
+<div class="ad-infor" id="add_project">
 
-		推荐返利方式
-		推荐返利比
-		推荐返利金额
-
-		项目优势
-		项目描述
-		图片 -->
-  <div class="ad-infor-next">
-	<p class="one">编号(自动)</p><input type="text" name="" value="*001" class="two code" readonly>
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">名称</p><input type="text" name="" value="" class="two name">
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">价格</p><input type="text" name="" value="" class="two price">
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">联系电话</p><input type="text" name="" value="" class="two phone">
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">地址</p><input type="text" name="" value="" class="two address">
-  </div>
-  <div class="ad-infor-next fanli">
-	<p class="one">返利方式</p>
-	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fan_precent" checked/>百分比 </label>
-	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fan_jine"/>固定金额 </label>
-  </div>
-
-  <div class="ad-infor-next">
-	<p class="one">返利比例</p><input type="text" name="" value="" class="two fan_precent">
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">返利金额</p><input type="text" name="" value="" class="two fan_jine" readonly>
-  </div>
-
-  <div class="ad-infor-next tuijian">
-	<p class="one">推荐返利方式</p>
-	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_way" type="radio" value="tuijian_precent" checked/>百分比 </label>
-	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_way" type="radio" value="tuijian_jine" />固定金额 </label>
-  </div>
-
-  <div class="ad-infor-next">
-	<p class="one">推荐返利比例</p><input type="text" name="" value="" class="two tuijian_precent">
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">推荐返利金额</p><input type="text" name="" value="" class="two tuijian_jine" readOnly>
-  </div>
-
-  <div class="ad-infor-next">
-  <p class="one">项目优势</p><textarea class="three item_advantage"></textarea>
-  </div>
-  <div class="ad-infor-next">
-	<p class="one">项目描述</p><textarea class="three item_describe"></textarea>
-  </div>
-
-  <div class="ad-infor-next">
-	<p class="one">上传图片</p><input type="file" name="files" value="" class="four image" id="fileupload" multiple>
-  </div>
-
-  <div class="ad-infor-next images_show">
-
-  </div>
-  <div class="ad-infor-next float-right">
-	<input type="submit" name="" value="取消" class="five five-backgroung" id="add_cancel">
-	<input type="submit" name="" value="预览" class="five">
-	<input type="submit" name="" value="保存" class="five" id="save">
-	<input type="submit" name="" value="提交" class="five">
-  </div>
 </div>
+<script id="add_project_infos" type="text/template">
+	<% if (project_infos.name) { %>
+		<div class="ad-infor-next">
+	  		<p class="one">编号(自动)</p><input type="text" name="" value="*001" class="two code" readonly>
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">名称</p><input type="text" name="" value="" class="two name">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">价格</p><input type="text" name="" value="" class="two price_text">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">联系电话</p><input type="text" name="" value="" class="two phone">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">地址</p><input type="text" name="" value="" class="two address">
+	    </div>
+	    <div class="ad-infor-next fanli">
+	  		<p class="one">返利方式</p>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fanli_bili" checked/>百分比 </label>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fanli_jine"/>固定金额 </label>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">返利比例</p><input type="text" name="" value="" class="two fanli_bili">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">返利金额</p><input type="text" name="" value="" class="two fanli_jine" readonly>
+	    </div>
+
+	    <div class="ad-infor-next tuijian">
+		  	<p class="one">推荐返利方式</p>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_fanli_fangshi" type="radio" value="tuijian_fanli_bili" checked/>百分比 </label>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_fanli_fangshi" type="radio" value="tuijian_fanli_jine" />固定金额 </label>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">推荐返利比例</p><input type="text" name="" value="" class="two tuijian_fanli_bili">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">推荐返利金额</p><input type="text" name="" value="" class="two tuijian_fanli_jine" readOnly>
+	    </div>
+
+	    <div class="ad-infor-next">
+	    	<p class="one">项目优势</p><textarea class="three item_advantage"></textarea>
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">项目描述</p><textarea class="three item_describe"></textarea>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">上传图片</p><input type="file" name="files" value="" class="four image" id="fileupload" multiple>
+	    </div>
+
+	    <div class="ad-infor-next float-right">
+		  	<input type="submit" name="" value="取消" class="five five-backgroung" id="add_cancel">
+		  	<input type="submit" name="" value="预览" class="five">
+		  	<input type="submit" name="" value="保存" class="five" id="save">
+		  	<input type="submit" name="" value="提交" class="five">
+	    </div>
+    <% } else { %>
+		<div class="ad-infor-next">
+	  		<p class="one">编号(自动)</p><input type="text" name="" value="*001" class="two code" readonly>
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">名称</p><input type="text" name="" value="" class="two name">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">价格</p><input type="text" name="" value="" class="two price_text">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">联系电话</p><input type="text" name="" value="" class="two phone">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">地址</p><input type="text" name="" value="" class="two address">
+	    </div>
+	    <div class="ad-infor-next fanli">
+	  		<p class="one">返利方式</p>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fanli_bili" checked/>百分比 </label>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="fan_way" type="radio" value="fanli_jine"/>固定金额 </label>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">返利比例(%)</p><input type="text" name="" value="" class="two fanli_bili">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">返利金额</p><input type="text" name="" value="" class="two fanli_jine" readonly>
+	    </div>
+
+	    <div class="ad-infor-next tuijian">
+		  	<p class="one">推荐返利方式</p>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_fanli_fangshi" type="radio" value="tuijian_fanli_bili" checked/>百分比 </label>
+		  	<label style="font-size:14px;margin-left: 50px;"><input name="tuijian_fanli_fangshi" type="radio" value="tuijian_fanli_jine" />固定金额 </label>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">推荐返利比例</p><input type="text" name="" value="" class="two tuijian_fanli_bili">
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">推荐返利金额</p><input type="text" name="" value="" class="two tuijian_fanli_jine" readOnly>
+	    </div>
+
+	    <div class="ad-infor-next">
+	    	<p class="one">项目优势</p><textarea class="three item_advantage"></textarea>
+	    </div>
+	    <div class="ad-infor-next">
+	  		<p class="one">项目描述</p><textarea class="three item_describe"></textarea>
+	    </div>
+
+	    <div class="ad-infor-next">
+	  		<p class="one">上传图片</p><input type="file" name="files" value="" class="four image" id="fileupload" multiple>
+	    </div>
+		<div id="add_pictures">
+
+		</div>
+	    <div class="ad-infor-next float-right">
+		  	<input type="submit" name="" value="取消" class="five five-backgroung" id="add_cancel">
+		  	<input type="submit" name="" value="预览" class="five">
+		  	<input type="submit" name="" value="保存" class="five" id="save">
+		  	<input type="submit" name="" value="提交" class="five">
+	    </div>
+	<% } %>
+</script>
+	<script id="add_pictures_infos" type="text/template">
+		<% if (images) { %>
+			<% _.forEach(images, function(image,index) { %>
+				<% if (index == 0) { %>
+					<div><img src="images/<%- image %>" width="50px"/><input type='submit' value='主图 删除' class='image_delete' data-id ="<%- index %>"></div>
+				<% } else { %>
+					<div><img src="images/<%- image %>" width="30px"/><input type='submit' value='删除' class='image_delete' data-id ="<%- index %>"></div>
+				<% }%>
+			<% }); %>
+		<% } %>
+	</script>
 
 {% endblock %}
 {% block script %}
 <script>
 $(function() {
 	var images = [];
+	var project_infos = {
+		images : [],
+		code : null,
+		name : null,
+		price_text : null,
+		address : null,
+		fanli_fangshi : "fanli_bili",
+		fanli_bili : null,
+		fanli_jine : null,
+		tuijian_fanli_fangshi : "tuijian_fanli_bili",
+		tuijian_fanli_bili : null,
+		tuijian_fanli_jine : null,
+		phone : null,
+		description : null,
+		xiangmuyoushi : null,
+		main_image_url : null
+	};
+	//初始
+	var init = function(){
+		var images = [];
+		var project_infos = {
+			images : [],
+			code : null,
+			name : null,
+			price_text : null,
+			address : null,
+			fanli_fangshi : "fanli_bili",
+			fanli_bili : null,
+			fanli_jine : null,
+			tuijian_fanli_fangshi : "tuijian_fanli_bili",
+			tuijian_fanli_bili : null,
+			tuijian_fanli_jine : null,
+			phone : null,
+			description : null,
+			xiangmuyoushi : null,
+			main_image_url : null
+		};
+	};
+	//进入项目创建
+	var add = function(){
+		var t = _.template($("#add_project_infos").html());
+		$("#add_project").html(t({project_infos:project_infos}));
+		var t = _.template($("#add_pictures_infos").html());
+		$("#add_pictures").html(t({images:images}));
+		//上传图片
+		$('#fileupload').fileupload({
+		   url: "/do_upload",
+		   dataType: 'json',
+		   done: function (e, data) {
+			  images.push(data._response.result.src);
+			  var t = _.template($("#add_pictures_infos").html());
+			  $("#add_pictures").html(t({images:images}));
+			}
+		});
+		//上传图片删除
+		$(".image_delete").click(function(){
+			var id = $(this).data("id");
+			images.splice(id,1);
+			var t = _.template($("#add_pictures_infos").html());
+			$("#add_pictures").html(t({images:images}));
+		});
+		//input radio框改变
+		$(".fanli input").change(function(){
+			 $(".fanli_bili").val("");
+			 $(".fanli_jine").val("");
+			 $(".fanli_bili").attr("readOnly","true");
+			 $(".fanli_jine").attr("readOnly","true");
+			 var r = $(this).is(":checked");
+			 if (r) {
+				 var value = $(this).attr("value");
+				 project_infos.fanli_fangshi = value;
+				 $("."+value).removeAttr("readOnly");
+			 }
+		 });
+		$(".tuijian input").change(function(){
+			 $(".tuijian_fanli_bili").val("");
+			 $(".tuijian_fanli_jine").val("");
+			 $(".tuijian_fanli_bili").attr("readOnly","true");
+			 $(".tuijian_fanli_jine").attr("readOnly","true");
+			 var r = $(this).is(":checked");
+			 if (r) {
+				 var value = $(this).attr("value");
+				 project_infos.tuijian_fanli_fangshi = value;
+				 $("."+value).removeAttr("readOnly");
+			 }
+		 });
+		//保存
+		$("#save").click(function(){
+			 project_infos.code = $(".code").val();
+			 project_infos.name = $(".name").val();
+			 if (!project_infos.name) {
+				 alert("名称必填！")
+				 return;
+			 }
+			 project_infos.price_text = $(".price_text").val();
+			 project_infos.address = $(".address").val();
+			 if (project_infos.fanli_fangshi == "fanli_bili") {
+				 project_infos.fanli_bili = $(".fanli_bili").val();
+				 if (!project_infos.fanli_bili) {
+				 	alert("返利比例必填！")
+					return;
+				 }
+				 project_infos.fanli_jine = null;
+			 }else {
+				 project_infos.fanli_jine = $(".fanli_jine").val();
+				 if (!project_infos.fanli_jine) {
+				 	alert("返利金额必填！")
+					return;
+				 }
+				 project_infos.fanli_bili = null;
+			 }
+			 if (project_infos.tuijian_fanli_fangshi == "tuijian_fanli_bili") {
+				 project_infos.tuijian_fanli_bili = $(".tuijian_fanli_bili").val();
+				 if (!project_infos.tuijian_fanli_bili) {
+				 	alert("推荐返利比例必填！")
+					return;
+				 }
+				 project_infos.tuijian_fanli_jine = null;
+			 }else {
+				 project_infos.tuijian_fanli_jine = $(".tuijian_fanli_jine").val();
+				 if (!project_infos.tuijian_fanli_jine) {
+				   alert("推荐返利金额必填！")
+				   return;
+				}
+				project_infos.tuijian_fanli_bili = null;
+			 }
+			 project_infos.phone = $(".phone").val();
+			 project_infos.description = $(".item_describe").val();
+			 project_infos.xiangmuyoushi = $(".item_describe").val();
+			 project_infos.main_image_url = images[0];
+			 project_infos.images = images;
+			 console.log(JSON.stringify(project_infos));
+			 $.post("/save_project",{project_infos:JSON.stringify(project_infos)},function(data){
+				 if (data.success) {
+				 	alert("保存成功！");
+				 }
+			 })
+		 });
+	};
+	add();
 	$(".list-infor1").addClass("hover");
 	$(".ad-infor").css("display","block");
 	$(".name").focus();
 	$("#add_cancel").click(function(){
 		location.href ="/add_project";
 	});
-	//input radio框改变
-	$(".fanli input").change(function(){
-		$(".fan_precent").attr("readOnly","true");
-		$(".fan_jine").attr("readOnly","true");
-		var r = $(this).is(":checked");
-		if (r) {
-			var value = $(this).attr("value");
-			$("."+value).removeAttr("readOnly");
-		}
-	});
-	$(".tuijian input").change(function(){
-		$(".tuijian_precent").attr("readOnly","true");
-		$(".tuijian_jine").attr("readOnly","true");
-		var r = $(this).is(":checked");
-		if (r) {
-			var value = $(this).attr("value");
-			$("."+value).removeAttr("readOnly");
-		}
-	});
-	//保存
-	$("#save").click(function(){
-		var code = $(".code").val();
-		var name = $(".name").val();
-		var price = $(".price").val();
-		var fan_precent = $(".fan_precent").val();
-		var tuijian_precent = $(".tuijian_precent").val();
-		var phone = $(".phone").val();
-		var item_describe = $(".item_describe").val();
-		var fan_describe = $(".fan_describe").val();
-		var item_advantage = $(".item_advantage").val();
-		var fan_way = $(".fan_way").val();
-		var tuijian_jine = $(".tuijian_jine").val();
-		if (!name) {
-			alert("名称必填！")
-			return;
-		}else if (true) {
-
-		}
-	});
-
-	//上传图片
-	$('#fileupload').fileupload({
-	   url: "/do_upload",
-	   dataType: 'json',
-	   done: function (e, data) {
-		   console.log(data);
-		   images.push(data._response.result.src);
-		   $(".images_show").html("");
-		   for (var i = 0; i < images.length; i++) {
-			   $(".images_show").append("<div><img src='images/"+images[i]+"' width='30px'/><input type='submit' value='删除' class='image_delete' data-id = '"+images[i]+"'></div>")
-		   }
-		   //上传图片删除
-		   $(".image_delete").click(function(){
-			   var name = $(this).data("id");
-			   alert("name:"+name);
-			   images.slite()
-		   });
-	   },
-	   progressall: function (e, data) {
-		  var progress = parseInt(data.loaded / data.total * 100, 10);
-		  $('#progress .progress-bar').css(
-			  'width',
-			  progress + '%'
-		  );
-	   } }).prop('disabled', !$.support.fileInput)
-	.parent().addClass($.support.fileInput ? undefined : 'disabled');
 });
 </script>
 {% endblock %}

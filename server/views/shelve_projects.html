@@ -17,7 +17,7 @@
 		    <p class="ad-word1"></p>
 		  <div class="ad-word2"><span class="money">{{project_info.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.tuijian_fanli_text}}</span></p></div>
 		</span>
-		<div class="operation"><p class="shelve" data-id="{{project_info.id}}">下架</p><p>编辑</p></div>
+		<div class="operation"><p class="shelve" data-id="{{project_info.id}}">下架</p><p><a href="/add_project?project_id={{project_info.id}}">编辑</a></p></div>
 	  </div>
 	{% endfor %}
 
@@ -46,7 +46,6 @@
 					alert("下架成功！");
 					location.href ="/shelve_projects";
 				}else {
-
 				}
 			});
 		});

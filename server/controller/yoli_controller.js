@@ -47,6 +47,16 @@ var down_project = function(data,cb){
 	var url = youli_service + "/shop/project/unshelve";
 	do_post_method(data,url,cb);
 };
+//保存项目
+var save_project = function(data,cb){
+	var url = youli_service + "/shop/project/add";
+	do_post_method(data,url,cb);
+};
+//保存图片
+var save_pictures = function(data,cb){
+	var url = youli_service + "/shop/project_image/add";
+	do_post_method(data,url,cb);
+}
 //获取当前cookie 商家id 信息
 var get_cookie_id = function(request){
 	var id;
@@ -723,6 +733,7 @@ exports.register = function(server, options, next){
 			method: 'POST',
 			path: '/save_project',
 			handler: function(request, reply){
+				var project_infos = JSON.parse(request.payload.project_infos);
 				var id = get_cookie_id(request);
 				if (!id) {
 					return reply.redirect("/login");
@@ -732,9 +743,63 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var data = {};
+				if (project_infos.fanli_fangshi == "fanli_bili") {
+					project_infos.fanli_fangshi = "百分比";
+				}else {
+					project_infos.fanli_fangshi = "固定金额";
+				}
+				if (project_infos.tuijian_fanli_fangshi == "tuijian_fanli_bili") {
+					project_infos.tuijian_fanli_fangshi = "百分比";
+				}else {
+					project_infos.tuijian_fanli_fangshi = "固定金额";
+				}
+				var project_data = {
+					tenant_id : id,
+                	user_id : user_id,
+                	name : project_infos.name,
+                	fanli_fangshi : project_infos.fanli_fangshi,
+                	fanli_bili : project_infos.fanli_bili,
+                	fanli_jine : project_infos.fanli_jine,
+                	tuijian_fanli_fangshi : project_infos.tuijian_fanli_fangshi,
+                	tuijian_fanli_bili : project_infos.tuijian_fanli_bili,
+                	tuijian_fanli_jine : project_infos.tuijian_fanli_jine,
+                	phone : project_infos.phone,
+                	description : project_infos.description,
+                	xiangmuyoushi : project_infos.xiangmuyoushi,
+                	address : project_infos.address,
+					price_text : project_infos.price_text
+				};
+				console.log("project_data:"+JSON.stringify(project_data));
 				search_projects_infos(id,user_id,function(err,results){
 					if (!err) {
-						return reply.view("add_project",{"results":results,"service_info":service_info});
+						save_project(project_data,function(err,content){
+							if (!err) {
+								if (content.success) {
+									for (var i = 0; i < project_infos.images.length; i++) {
+										var img_data = {};
+										img_data = {
+											"project_id" : content.project_id,
+											"image_src" : project_infos.images[i],
+										};
+										if (i==0) {
+											img_data.is_main_image = 1;
+										}else {
+											img_data.is_main_image = 0;
+										}
+										save_pictures(img_data,function(err,result){
+											if (!err) {
+
+											}else {
+
+											}
+										});
+									}
+								return reply({"success":true,"results":results,"service_info":service_info});
+								}
+							}else {
+
+							}
+						});
 					}else {
 						return reply({"success":false,"message":results.message,"service_info":results.service_info});
 					}
