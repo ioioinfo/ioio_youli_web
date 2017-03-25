@@ -1,4 +1,56 @@
 {% extends 'layout.html' %}
+{% block style %}
+	<style media="screen">
+		.bianji{
+			width: 300px;
+			height: 245px;
+			/*display: none;*/
+			position: absolute;
+			top: 250px;
+			left: 500px;
+			padding: 0 40px;
+		}
+		.edit_content{
+			font-size: 16px;
+			padding-left: 20px;
+		}
+		.user2,.use2-infor{
+			border: 1px solid #666;
+			display: inline-block;
+			width: 497px;
+			box-sizing: border-box;
+		}
+		.user2{
+			border-bottom: none;
+		}
+		.user2 div{
+			display: inline-block;
+			width: 120px;
+			text-align: center;
+			box-sizing: border-box;
+		}
+		.use2-infor div{
+			display: inline-block;
+			width: 120px;
+			text-align: center;
+			box-sizing: border-box;
+			line-height: 70px;
+			vertical-align: top;
+		}
+		.use2-infor .ad-word2 p{
+			font-size: 14px;
+			color: #666;
+			height: 35px;
+			line-height: 35px;
+		}
+		.use2-infor .ad-word2 p:hover{
+			font-size: 16px;
+			background: #da6e6b;
+			color: #fff;
+			cursor: pointer;
+		}
+	</style>
+{% endblock %}
 {% block content %}
 	<div class="warp">
 		 <div class="right-nav-height">
@@ -9,12 +61,51 @@
 				<a class="ad-word2" href="/logout">退出登入</a>
 			</div>
 		</div>
+
+		<div class="edit_content">
+
+		</div>
+		<div class="user bianji">
+			<p>编号：<input type="text" name="" value="" class="add_code"></p>
+			<p>账户<input type="text" name="" value="" class="add_name"></p>
+			<p>昵称:<input type="text" name="" value="" class="add_ab"></p>
+			<p class="user-submit"><input type="submit" name="" value="确 定"  class="user-submit1 user-submit2"></p>
+		</div>
 	</div>
+
 {% endblock %}
 {% block script %}
+<script id="edit" type="text/template">
+	<div class="user2">
+		<div class="">id</div>
+		<div class="">用户名</div>
+		<div class="ad-word2">昵称</div>
+		<div class="ad-word2">操作</div>
+	</div>
+	<div class="">
+	<% _.forEach(user_list, function(user) {  %>
+	   <div class="use2-infor">
+		   <div class=""><%- user.id %></div>
+		   <div class=""><%- user.username %></div>
+		   <div class="ad-word2"><%- user.name %></div>
+		   <div class="ad-word2"><p>编辑</p><p>删除</p></div>
+	   </div>
+	<% }); %>
+   </div>
+</script>
 <script>
 	$(function() {
 		$(".list-infor6").addClass("hover");
+		$.get("/tenant_user_list",function(data){
+			if (data.success) {
+				var user_list = data.rows;
+				console.log(user_list);
+				var t = _.template($("#edit").html());
+				$(".edit_content").html(t({user_list:user_list}));
+			}else {
+				alert(data.message);
+			}
+		})
 	});
 </script>
 {% endblock %}

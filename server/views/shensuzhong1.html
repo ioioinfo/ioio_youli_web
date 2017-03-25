@@ -1,41 +1,4 @@
 {% extends 'layout.html' %}
-{% block style %}
-	<style media="screen">
-	.right-nav-height {
-		height: 160px;
-		}
-		.right-nav-height .shensu{
-			font-size:12px;
-			color:#000;
-			padding: 0 20px;
-			box-sizing: border-box;
-			line-height: 20px;
-			height: 20px;
-		}
-		.right-nav-height .shensu span{
-			display: inline-block;
-			margin-left: 10px;
-			color: red;
-		}
-		.right-nav-height .shensu img{
-			width: 20px;
-			height: 20px;
-			vertical-align: middle;
-
-		}
-		.right-nav-height .ad .ad-word2 .money{
-			width: 50%;
-          	-webkit-box-orient: vertical;
-	          overflow: hidden;
-
-		}
-		.right-nav-height .ad .ad-word2 .rebate{
-			width: 36%;
-			margin-right: 0;
-			vertical-align: top;
-		}
-	</style>
-{% endblock %}
 {% block content %}
 <div class="right-nav">
   <span>选择</span><span>图片</span><span>文字信息</span><span>操作</span>
@@ -52,11 +15,9 @@
 		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
 		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
-		    <div class="ad-word2"><span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;<a target="_blank" href="http://youli.hankang365.com/images/youli/media/{{project_info.file_name}}"><img src="http://youli.hankang365.com/images/youli/media/{{project_info.file_name}}" style="width:20px;height:20px;vertical-align: middle;margin-left:5px;";/></a>申诉原因：{{project_info.shensu_reason}}</span>	<p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
+		    <div class="ad-word2"><span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;申诉原因：{{project_info.shensu_reason}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
 		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p>拒绝</p></div>
-			<span>jdsfoisjo</span>
-		</p>
 	  </div>
 	{% endfor %}
 {% endif %}

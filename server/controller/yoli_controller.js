@@ -6,6 +6,11 @@ var youli_service = "http://211.149.248.241:17002";
 var path = require('path');
 var fs = require('fs');
 
+var state_map = {
+	"edit" : "新建",
+	"shelve" : "上架",
+	"approve" : "发布"
+};
 
 var do_get_method = function(url,cb){
 	uu_request.get(url, function(err, response, body){
@@ -139,6 +144,32 @@ var check_project = function(id,cb){
 	var url = youli_service + "/shop/project/" + id;
 	do_get_method(url,cb);
 };
+//查询所有项目
+var project_list = function(tenant_id,cb){
+	var url = youli_service + "/shop/all_projects?tenant_id=" + tenant_id;
+	do_get_method(url,cb);
+};
+//商户账号创建
+var tenant_user_create = function(data,cb){
+	var url = youli_service + "/shop/tenant_user/create";
+	do_post_method(data,url,cb);
+};
+//商户账号查询
+var tenant_user_list = function(tenant_id,cb){
+	var url = youli_service + "/shop/tenant_user/list?tenant_id="+tenant_id;
+	do_get_method(url,cb);
+};
+//商户账号更新
+var tenant_user_update = function(data,cb){
+	var url = youli_service + "/shop/tenant_user/update";
+	do_post_method(data,url,cb);
+};
+//商户账号删除
+var tenant_user_delete = function(data,cb){
+	var url = youli_service + "/shop/tenant_user/delete";
+	do_post_method(data,url,cb);
+};
+
 exports.register = function(server, options, next){
 	var search_projects_infos = function(id,user_id,cb){
 		var ep =  eventproxy.create("tenant_info","project_num_info","subscribes_num_info","login_user",function(tenant_info,project_num_info,subscribes_num_info,login_user){
@@ -185,6 +216,134 @@ exports.register = function(server, options, next){
 		});
 	};
 	server.route([
+		//商家商户账号删除
+		{
+			method: 'GET',
+			path: '/tenant_user_list',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						tenant_user_list(id,function(err,rows){
+							if (!err) {
+								return reply({"success":true,"rows":rows.rows});
+							}else {
+								return reply({"success":false,"message":results.message});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//商家商户账号删除
+		{
+			method: 'POST',
+			path: '/tenant_user_delete',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var data = request.payload.data;
+				data = JSON.parse(data);
+				tenant_user_delete(data,function(err,row){
+					if (!err) {
+						return reply({"success":true});
+					}else {
+						return reply({"success":false,"message":results.message});
+					}
+				});
+			}
+		},
+		//商家商户账号修改
+		{
+			method: 'POST',
+			path: '/tenant_user_update',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var data = request.payload.data;
+				data = JSON.parse(data);
+				tenant_user_update(data,function(err,row){
+					if (!err) {
+						return reply({"success":true});
+					}else {
+						return reply({"success":false,"message":results.message});
+					}
+				});
+			}
+		},
+		//商家商户账号新建
+		{
+			method: 'POST',
+			path: '/tenant_user_create',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var data = request.payload.data;
+				data = JSON.parse(data);
+				tenant_user_create(data,function(err,row){
+					if (!err) {
+						return reply({"success":true,"tenant_user_id":row.tenant_user_id});
+					}else {
+						return reply({"success":false,"message":results.message});
+					}
+				});
+			}
+		},
+		//商家项目列表 project_list
+		{
+			method: 'GET',
+			path: '/project_list',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						project_list(id,function(err,rows){
+							if (!err) {
+								return reply.view("project_list",{"rows":rows.rows,"results":results,"state_map":state_map});
+							}else {
+								return reply({"success":false,"message":rows.message,"results":results,"service_info":rows.service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
 		//后台店家登入接口
 		{
 			method: 'GET',

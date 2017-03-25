@@ -12,6 +12,7 @@
 		min-width: 1024px;
 		max-width: 1300px;
 		margin: 0 auto;
+		position: relative;
 	  }
 	  li{
 		list-style: none;
@@ -476,6 +477,65 @@
 	   overflow:auto;
 	   background: #fff;
 	 }
+	 /*用户信息*/
+   .user{
+	   width: 200px;
+	   height: 185px;
+	   background:#fff;
+	   position: absolute;
+	   top: 196px;
+	   left: 42.042755%;
+	   z-index: 999;
+	   font-size: 12px;
+	   box-sizing: border-box;
+	   padding:0 5px;
+	   border-radius: 4px;
+	   display: none;
+   }
+   .user p{
+	   color: #666;
+	   margin: 10px 0;
+   }
+   .user p input{
+	   width: 135px;
+	   border: none;
+	   border-bottom: 1px solid #999;
+   }
+   .user .user-submit{
+	   text-align: center;
+
+	   margin-top: 5px;
+   }
+   .user .user-submit1{
+	   margin-left: 20px;
+	   border: none;
+	   background: #55ACD7;
+	   color: #fff;
+	   padding: 2px 4px;
+	   border-radius: 2px;
+	   margin-top: 10px;
+
+   }
+   .user .user-submit input{
+		width: 50px;
+		cursor: pointer;
+		border-radius: 4px;
+   }
+   .toumingceng{
+	   position: absolute;
+	   top: 0;
+	   left: 0;
+	   right: 0;
+	   bottom: 0;
+	   height: 100%;
+	   width: 100%;
+	   background: #808080;
+	   opacity: 0.5;
+	   z-index: 9;
+	   display: none;
+   }
+
+
 	 .ad-infor-next .five{
 	   width:85px;
 	   height: 35px;
@@ -524,7 +584,7 @@
           </div>
           <div class="header-right">
             <p>{{results.login_user.name}}</p>
-            <p>{{results.tenant_info.code}}</p>
+            <p class="header-left-submit">设置</p>
           </div>
         </div>
         <div class="bottom">
@@ -568,12 +628,10 @@
       <div class="right">
         <div class="list">
           <ul class="list-ul">
-			<li class="list-infor0"><a href="/background"><p><span>首页</span></p></a></li>
-            <li class="list-infor1"><a href="/add_project"><p><span>创建项目</span></p></a></li>
+			<li class="list-infor0"><a href="/project_list"><p><span>项目列表</span></p></a></li>
+
             <li class="list-infor2 infor"><a href="/customer_order"><p><span>客户预约</span><span>共{{results.subscribes_num_info.yiyuyue || 0}}条</span></p></a></li>
-            <li class="list-infor3 infor"><a href="/unshelve_projects"><p><span>未上架</span><span>共{{results.project_num_info.edit || 0}}条</span></p></a></li>
-            <li class="list-infor4 infor"><a href="/shelve_projects"><p><span>待审核</span><span>共{{results.project_num_info.shelve || 0}}条</span></p></a></li>
-            <li class="list-infor5 infor"><a href="/approve_projects"><p><span>已发布</span><span>共{{results.project_num_info.approve || 0}}条</span></p></a></li>
+
             <li class="list-infor6"><a href="/tenant"><p><span>商家信息</span></p></a></li>
           </ul>
         </div>
@@ -585,10 +643,41 @@
       <span>有利商城客户后台管理</span>
       <span>上海佑佑信息科技有限公司开发</span>
     </div>
-	<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+	<!-- 用户信息 -->
+	<div class="user">
+		<p>编号：&nbsp;<input type="text" name="" value="{{results.login_user.id}}"></p>
+		<p>昵称：&nbsp;<input type="text" name="" value="{{results.login_user.name}}"></p>
+		<p>帐号:    &nbsp;<input type="text" name="" value="xxxxxxx"></p>
+		<p>密码:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
+		<p>手机号:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
+		<p class="user-submit"><input type="submit" name="" value="注 销" ><input type="submit" name="" value="确 定"  class="user-submit1"></p>
+	</div>
+	<div class="toumingceng"> </div>
+	<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script src="js/lodash.min.js" type="text/javascript"></script>
 	<script src="js/jquery.ui.widget.js" type="text/javascript"></script>
 	<script src="js/jquery.fileupload.js" type="text/javascript"></script>
+	<script>
+		$(function() {
+			$(".header-left-submit").click(function(){
+				$(".user").show();
+				$(".toumingceng").show();
+			});
+			$(".user-submit1").click(function(){
+				$(".user").hide();
+				$(".toumingceng").hide();
+			})
+			$(".table-submit").click(function(){
+				$(".grant").show();
+				$(".toumingceng").show();
+			});
+			$(".toumingceng").click(function(){
+				$(".grant").hide();
+				$(".toumingceng").hide();
+				$(".user").hide();
+			})
+		});
+	</script>
 	{% block script %}
 	<script>
 		$(function() {

@@ -1,4 +1,17 @@
 {% extends 'layout.html' %}
+{% block style %}
+	<style media="screen">
+		.bianji{
+			width: 300px;
+			height: 245px;
+			/*display: none;*/
+			position: absolute;
+			top: 250px;
+			left: 500px;
+			padding: 0 40px;
+		}
+	</style>
+{% endblock %}
 {% block content %}
 	<div class="warp">
 		 <div class="right-nav-height">
@@ -9,12 +22,38 @@
 				<a class="ad-word2" href="/logout">退出登入</a>
 			</div>
 		</div>
+
+		<div class="user bianji edit_content">
+
+		</div>
 	</div>
+
 {% endblock %}
 {% block script %}
+<script id="edit" type="text/template">
+	<div class="right-nav-height">
+	<% _.forEach(user_list, function(user) {  %>
+	   <div class="ad">
+		   <div class="ad-word2">id：<%- user.id %></div>
+		   <div class="ad-word2">用户名：<%- user.username %></div>
+		   <div class="ad-word2">昵称：<%- user.name %></div>
+	   </div>
+	<% }); %>
+   </div>
+</script>
 <script>
 	$(function() {
 		$(".list-infor6").addClass("hover");
+		$.get("/tenant_user_list",function(data){
+			if (data.success) {
+				alert(data.rows);
+				var user_list = data.rows;
+				var t = _.template($("#edit").html());
+				$(".edit_content").html(t({user_list:user_list}));
+			}else {
+				alert(data.message);
+			}
+		})
 	});
 </script>
 {% endblock %}

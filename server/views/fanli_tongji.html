@@ -1,5 +1,169 @@
 {% extends 'layout.html' %}
+{% block style %}
+	<style media="screen">
+	/*右边表格部分*/
+	.right-table{
+		width: 80%;
+		height: 551px;
+		box-sizing: border-box;
+		overflow: auto;
+		margin: 0 auto;
+		border-left: 1px solid #f7f2f7;
+		border-right: 1px solid #f7f2f7;
+	}
+	.right-table .table-head{
+	   width: 100%;
+	   display: flex;
+	}
+	.right-table .table-head li{
+	   flex: 1;
+	   font-size: 16px;
+	   text-align: center;
+	   height: 54px;
+	   line-height: 54px;
+	   border-bottom: 1px solid #f7f2f7;
+	   box-sizing: border-box;
+	}
+	.table-infor{
+	   width: 100%;
+	   display: flex;
+	}
+	.table-infor li{
+		flex: 1;
+		text-align: center;
+		height: 45px;
+		line-height: 45px;
+		font-size: 12px;
+		border-bottom: 1px solid #f7f2f7;
+	}
+	.table-infor li input{
+		vertical-align: middle;
+	}
+	.table-infor li img{
+		width: 30px;
+		height: 30px;
+		vertical-align: middle;
+	}
+	.table-infor li .table-submit{
+		border: none;
+		background: #DA6E6B;
+		padding: 2px 4px;
+		border-radius: 2px;
+		color: #fff;
+		cursor: pointer;
+		-webkit-transition:all 1s;
+		-moz-transition:all 1s;
+		-o-transition:all 1s;
+	}
+	.table-infor li .table-submit:hover{
+		-webkit-transform:scale(1.2) rotate(10deg);
+		-moz-transform:scale(1.2) rotate(10deg);
+		-o-transform:scale(1.2) rotate(10deg);
+	}
+
+
+	.right .right-bottom{
+	  width: 96%;
+	  margin: 0 auto;
+	  height: 46px;
+	  line-height: 46px;
+	  text-align: right;
+	  background: #eff2f7;
+	}
+	.right .right-bottom p{
+	  display: inline-block;
+	  margin-right: 40px;
+	}
+	.right .right-bottom p span a{
+	  font-size: 12px;
+	  color: #03a9f4;
+	}
+	.right .right-bottom p span{
+	  font-size: 12px;
+	  color: #03a9f4;
+	  display: inline-block;
+	  margin-right: 5px;
+	}
+	.right .right-bottom p .remove a{
+	  color: #ff4081;
+	}
+	.right .right-bottom p .remove{
+	  cursor: pointer;
+	  margin-left: 15px;
+	}
+	/*用户信息*/
+	.user{
+		width: 200px;
+		height: 175px;
+		background:#fff;
+		position: absolute;
+		top: 200px;
+		left: 500px;
+		z-index: 999;
+		font-size: 12px;
+		box-sizing: border-box;
+		padding:0 5px;
+		border-radius: 4px;
+		display: none;
+	}
+	.user p{
+		color: #666;
+		margin: 10px 0;
+	}
+	.user p input{
+		width: 135px;
+	}
+
+	.user .user-submit{
+		text-align: right;
+		margin: 20px auto;
+
+	}
+	.user .user-submit1{
+		margin-left: 20px;
+		border: none;
+		background: #55ACD7;
+		color: #fff;
+		padding: 2px 4px;
+		border-radius: 2px;
+
+	}
+	.user .user-submit input{
+		 width: 50px;
+		 cursor: pointer;
+	}
+	.toumingceng{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		width: 100%;
+		background: #808080;
+		opacity: 0.5;
+		z-index: 9;
+		display: none;
+	}
+	</style>
+{% endblock %}
 {% block content %}
+<div class="right-table">
+	<ul class="table-head">
+		<li>序号</li>
+		<li>项目名称</li>
+		<li>返利人数</li>
+		<li>返利金额</li>
+	</ul>
+	<ul class="table-infor">
+		<li>001</li>
+		<li>新东方</li>
+		<li>1</li>
+		<li>1000</li>
+	</ul>
+
+
+</div>
 
 {% endblock %}
 {% block script %}

@@ -1,12 +1,166 @@
 {% extends 'layout.html' %}
+
+{% block style %}
+	<style media="screen">
+	.right-nav{
+	  width: 100%;
+	  border-bottom: 1px solid #f7f2f7;
+	  height: 44px;
+	}
+	.right-nav span{
+	  font-size: 12px;
+	  height: 44px;
+	  line-height: 44px;
+	  display: inline-block;
+	  text-align: center;
+
+	}
+	.right-nav span:first-child{
+	  width: 4.578754%;
+	}
+	.right-nav span:nth-child(5n+2){
+	  width: 11.17216%;
+	}
+	.right-nav span:nth-child(5n+3){
+	  width: 50.91575%;
+	}
+	.right-nav span:nth-child(5n+4){
+	  width:18.315%;
+	}
+	.right-nav span:last-child{
+	  width: 11.17216%;
+	}
+	.right-nav-height{
+	  height: 118px;
+	  border-bottom: 1px solid #f7f2f7;
+	}
+	.right-nav-height .checkbox{
+	  width: 4.6511%;
+	  text-align: center;
+	  display: inline-block;
+	}
+	.right-nav-height .adimg img{
+	  display: inline-block;
+	  width:100%;
+	  height: 98px;
+	  vertical-align: middle;
+	}
+	.right-nav-height .adimg{
+	  width:11.3488372%;
+	  height: 98px;
+	  display: inline-block;
+	}
+	.right-nav-height .ad{
+	  width:51.72093%;
+	  height: 118px;
+	  display: inline-block;
+	  vertical-align: middle;
+	}
+	.right-nav-height .ad .ad-word1{
+	  width:96.4%;
+	  font-size: 12px;
+	  color: #646464;
+	  text-align: left;
+	  line-height: 22px;
+	  display: inline-block;
+	  padding-left: 4.4964%;
+	  margin-top: 8px;
+	  text-indent: 0;
+	}
+	.right-nav-height .ad .ad-word1 img{
+		vertical-align: middle;
+	margin-top: -3px;
+	}
+	.right-nav-height .ad .ad-word2{
+	  width:100%;
+	  font-size: 12px;
+	  display: inline-block;
+	  overflow: hidden;
+	}
+	.right-nav-height .ad .ad-word2 .money{
+		display: inline-block;
+		color: #e51c23;
+		line-height: 28px;
+		text-indent: 25px;
+		margin-left: 0
+	}
+	.right-nav-height .ad .ad-word2 .rebate{
+	  display: inline-block;
+	  font-size: 12px;
+	  float: right;
+	}
+	.right-nav-height .ad .ad-word2 .rebate .rebate1{
+	  display: inline-block;
+	  width: 78px;
+	  border: 1px solid #646464;
+	  text-align: center;
+	  margin-right: 10px;
+	  color: #646464;
+	}
+	.right-nav-height .operation{
+	  display: inline-block;
+	  width: 11.3488372%;;
+	  height: 118px;
+	  vertical-align: middle;
+	}
+	.right-nav-height .operation p{
+
+	  width: 60px;
+	  height: 26px;
+	  line-height: 26px;
+	  font-size: 14px;
+	  margin: 15px auto;
+	  text-align: center;
+	  cursor: pointer;
+
+	}
+	.right-nav-height .cashback{
+		display: inline-block;
+		width: 18.604%;
+		height: 118px;
+
+		line-height: 30px;
+		vertical-align: top;
+		font-size: 14px;
+		color: #000;
+		overflow: hidden;
+		padding-left: 53px;
+		padding-top: 30px;
+		box-sizing: border-box;
+	}
+	.right-nav-height .cashback input{
+		margin-left: 10px;
+		vertical-align: sub;
+	}
+	.right-nav-height .cashback span{
+		display: inline-block;
+	}
+	.right-nav-height .cashback span:last-child{
+		margin-left: 20px;
+	}
+	.right-nav-height .operation p:first-child{
+	  background: #ffa726;
+	  border-radius: 4px;
+
+	}
+	.right-nav-height .operation p:last-child{
+	  background: #ab47bc;
+	  border-radius: 4px;
+	  margin-top: 15px;
+	}
+	</style>
+{% endblock %}
+
 {% block content %}
 <div class="right-nav">
-  <span>选择</span><span>图片</span><span>文字信息</span><span>操作</span>
+  <span>选择</span><span>图片</span><span>文字信息</span><span>推荐人信息</span><span>操作</span>
 </div>
 <div class="warp">
 {% if rows.length ==0 %}
 	<img class="images" src="images/img-12.png" alt="">
 {% else %}
+
+
 	{% for project_info in rows %}
 	  <div class="right-nav-height">
 		<span class="checkbox"><input type="checkbox" name="" value=""></span>
@@ -14,9 +168,10 @@
 		<span class="ad">
 		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
 		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
-		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
-		    <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
+		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}</p>
+		    <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1 is_vaild">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
+		<p class="cashback">{% if project_info.recommender_wx_user %}<span>{{project_info.recommender_wx_user.name}}</span><br/><span>{{project_info.recommender_wx_user.mobile}}</span><input type="checkbox" name="" value="">{% endif %}</p>
 		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p>拒绝</p></div>
 	  </div>
 	{% endfor %}
@@ -72,6 +227,13 @@
 			$("#jine_cancel").click(function(){
 				$(".jine_info").attr("style","display:none;");
 			});
+		});
+		$(".is_vaild").click(function(){
+			var id = 1;
+			var is_valid = 1;
+			$.post("/change_recommender_valid",{id:id,is_valid:is_valid},function(data){
+
+			})
 		});
 	});
 </script>
