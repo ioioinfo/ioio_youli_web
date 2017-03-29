@@ -11,43 +11,105 @@
 			padding: 0 40px;
 		}
 		.edit_content{
+			width: 440px;
 			font-size: 16px;
 			padding-left: 20px;
+			border-bottom: 1px solid #f7f5f7;
+			margin: 0 auto;
 		}
 		.user2,.use2-infor{
-			border: 1px solid #666;
+			border: 1px solid #f7f5f7;
 			display: inline-block;
-			width: 497px;
+			width: 440px;
 			box-sizing: border-box;
+			border-bottom: none;
 		}
 		.user2{
 			border-bottom: none;
 		}
 		.user2 div{
 			display: inline-block;
-			width: 120px;
+			width: 100px;
 			text-align: center;
 			box-sizing: border-box;
 		}
 		.use2-infor div{
 			display: inline-block;
-			width: 120px;
+			width: 100px;
 			text-align: center;
 			box-sizing: border-box;
 			line-height: 70px;
 			vertical-align: top;
 		}
 		.use2-infor .ad-word2 p{
-			font-size: 14px;
-			color: #666;
-			height: 35px;
-			line-height: 35px;
+			font-size: 12px;
+			color: #fff;
+			height: 20px;
+			line-height: 20px;
+			margin-top: 15px;
 		}
 		.use2-infor .ad-word2 p:hover{
-			font-size: 16px;
-			background: #da6e6b;
-			color: #fff;
+			background: #000;
 			cursor: pointer;
+		}
+		.ad-word2-p1{
+			background: #19A553;
+
+		}
+		.ad-word2-p2{
+			background: #00A7EB;
+		}
+		.right-nav-height{
+			border-bottom: none;
+		}
+		.ad-word2-p1-bianji{
+			width: 200px;
+			height: 100px;
+			border-radius: 4px;
+			background: #fff;
+
+			position: absolute;
+			top: 300px;
+			left: 50.3%;
+			display: none;
+			z-index: 999;
+		}
+		.ad-word2-p1-bianji p{
+			margin: 7px;
+			font-size: 12px;
+			color: #666;
+		}
+		.ad-word2-p1-bianji .ad-word2-p1-bianji-p2{
+			margin-left: 19px;
+		}
+		.ad-word2-p1-bianji p input{
+			width: 120px;
+			height: 20px;
+			line-height: 20px;
+			border: none;
+			border-bottom: 1px solid #666;
+			outline: none;
+			text-indent: 10px;
+		}
+		.ad-word2-bianji-button{
+			width: 100%;
+			text-align: center;
+			margin-top: 10px;
+		}
+		.ad-word2-bianji-button input{
+			width: 53px;
+			border: none;
+			border-radius: 4px;
+			height: 20px;
+
+		}
+		.ad-word2-bianji-no{
+			margin-left: 15px;
+			color: #666;
+		}
+		.ad-word2-bianji-yes{
+			background: #FF7100;
+			color: #fff;
 		}
 	</style>
 {% endblock %}
@@ -88,11 +150,19 @@
 		   <div class=""><%- user.id %></div>
 		   <div class=""><%- user.username %></div>
 		   <div class="ad-word2"><%- user.name %></div>
-		   <div class="ad-word2"><p>编辑</p><p>删除</p></div>
+		   <div class="ad-word2"><p class="ad-word2-p1">编辑</p><p class="ad-word2-p2">删除</p></div>
 	   </div>
 	<% }); %>
    </div>
 </script>
+<div class="ad-word2-p1-bianji">
+	<p class="ad-word2-p1-bianji-p1">用户名:<input type="text" name="" value=""></p>
+	<p class="ad-word2-p1-bianji-p2">昵称:<input type="text" name="" value=""></p>
+	<div class="ad-word2-bianji-button">
+		<input type="submit" name="" value="取 消" class="ad-word2-bianji-no">
+		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes">
+	</div>
+</div>
 <script>
 	$(function() {
 		$(".list-infor6").addClass("hover");
@@ -102,10 +172,31 @@
 				console.log(user_list);
 				var t = _.template($("#edit").html());
 				$(".edit_content").html(t({user_list:user_list}));
+
+				$(".ad-word2 .ad-word2-p1").click(function(){
+					$(".ad-word2-p1-bianji").show();
+					$(".toumingceng").show();
+				});
+				$(".ad-word2-bianji-no").click(function(){
+					$(".ad-word2-p1-bianji").hide();
+					$(".toumingceng").hide();
+				});
+				$(".ad-word2-bianji-yes").click(function(){
+					$(".ad-word2-p1-bianji").hide();
+					$(".toumingceng").hide();
+				});
+				$(".toumingceng").click(function(){
+					$(".ad-word2-p1-bianji").hide();
+					$(".toumingceng").hide();
+				})
 			}else {
 				alert(data.message);
 			}
 		})
+
+
+
+
 	});
 </script>
 {% endblock %}

@@ -644,7 +644,7 @@
       <span>上海佑佑信息科技有限公司开发</span>
     </div>
 	<!-- 用户信息 -->
-	<div class="user">
+	<div class="user user_head">
 		<p>编号：&nbsp;<input type="text" name="" value="{{results.login_user.id}}"></p>
 		<p>昵称：&nbsp;<input type="text" name="" value="{{results.login_user.name}}"></p>
 		<p>帐号:    &nbsp;<input type="text" name="" value="xxxxxxx"></p>
@@ -664,11 +664,11 @@
 				location.href="/logout";
 			});
 			$(".header-left-submit").click(function(){
-				$(".user").show();
+				$(".user_head").show();
 				$(".toumingceng").show();
 			});
 			$(".user-submit1").click(function(){
-				$(".user").hide();
+				$(".user_head").hide();
 				$(".toumingceng").hide();
 			})
 			$(".table-submit").click(function(){
@@ -678,7 +678,7 @@
 			$(".toumingceng").click(function(){
 				$(".grant").hide();
 				$(".toumingceng").hide();
-				$(".user").hide();
+				$(".user_head").hide();
 			})
 		});
 	</script>
