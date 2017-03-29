@@ -131,9 +131,9 @@
 			}
 			$.post("/do_login",{"username":username,"password":password,"tenant_code":tenant_code},function(data){
 				if (data.success) {
-					location.href = "/background";
+					location.href = "/";
 				}else {
-					alert(data.message);
+					alert("密码错误！");
 				}
 			});
 

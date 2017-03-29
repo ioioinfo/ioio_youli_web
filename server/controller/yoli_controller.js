@@ -169,7 +169,11 @@ var tenant_user_delete = function(data,cb){
 	var url = youli_service + "/shop/tenant_user/delete";
 	do_post_method(data,url,cb);
 };
-
+//改变推荐人是否有效接口
+var change_recommender_valid = function(data,cb){
+	var url = youli_service + "/shop/orders/change_recommender_valid"
+	do_post_method(data,url,cb);
+}
 exports.register = function(server, options, next){
 	var search_projects_infos = function(id,user_id,cb){
 		var ep =  eventproxy.create("tenant_info","project_num_info","subscribes_num_info","login_user",function(tenant_info,project_num_info,subscribes_num_info,login_user){
@@ -216,6 +220,40 @@ exports.register = function(server, options, next){
 		});
 	};
 	server.route([
+		//推荐人有效的 接口
+		{
+			method: 'POST',
+			path: '/change_recommender_valid',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var is_valid = request.payload.is_valid;
+				var id = request.payload.id;
+				if (!is_valid||!id) {
+					return reply({"success":false,"message":"params wrong"});
+				}
+				var data = {"id":id,"user_id":user_id,"is_valid":is_valid};
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						change_recommender_valid(data,function(err,result){
+							if (!err) {
+								return reply({"success":true,"message":"ok"});
+							}else {
+								return reply({"success":false,"message":result.message});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
 		//商家商户账号删除
 		{
 			method: 'GET',
@@ -319,7 +357,7 @@ exports.register = function(server, options, next){
 		//商家项目列表 project_list
 		{
 			method: 'GET',
-			path: '/project_list',
+			path: '/',
 			handler: function(request, reply){
 				var id = get_cookie_id(request);
 				if (!id) {
@@ -405,10 +443,10 @@ exports.register = function(server, options, next){
 							cookie.user_id = user_id;
 							return reply({"success":true,"service_info":service_info,"service_info":service_info}).state('cookie', cookie, {ttl:10*365*24*60*60*1000});
 						}else {
-							return reply({"success":false,"service_info":service_info});
+							return reply({"success":false,"service_info":service_info,"message":row.message});
 						}
 					}else {
-						return reply({"success":false,"service_info":service_info});
+						return reply({"success":false,"service_info":service_info,"message":row.message});
 					}
 				});
 			}
@@ -812,7 +850,9 @@ exports.register = function(server, options, next){
 			method: 'GET',
 			path: '/logout',
 			handler: function(request, reply){
-				return reply.redirect("/login").state('cookie', {});
+				var cookie = request.state.cookie;
+				delete cookie.id;
+				return reply.redirect("/login").state('cookie',cookie,{});
 			}
 		},
 		//商家已确认

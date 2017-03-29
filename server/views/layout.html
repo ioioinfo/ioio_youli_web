@@ -628,7 +628,7 @@
       <div class="right">
         <div class="list">
           <ul class="list-ul">
-			<li class="list-infor0"><a href="/project_list"><p><span>项目列表</span></p></a></li>
+			<li class="list-infor0"><a href="/"><p><span>项目列表</span></p></a></li>
 
             <li class="list-infor2 infor"><a href="/customer_order"><p><span>客户预约</span><span>共{{results.subscribes_num_info.yiyuyue || 0}}条</span></p></a></li>
 
@@ -650,7 +650,7 @@
 		<p>帐号:    &nbsp;<input type="text" name="" value="xxxxxxx"></p>
 		<p>密码:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
 		<p>手机号:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
-		<p class="user-submit"><input type="submit" name="" value="注 销" ><input type="submit" name="" value="确 定"  class="user-submit1"></p>
+		<p class="user-submit"><input type="submit" name="" value="注 销" class="logout"><input type="submit" name="" value="确 定"  class="user-submit1"></p>
 	</div>
 	<div class="toumingceng"> </div>
 	<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -659,6 +659,10 @@
 	<script src="js/jquery.fileupload.js" type="text/javascript"></script>
 	<script>
 		$(function() {
+			//注销
+			$(".logout").click(function(){
+				location.href="/logout";
+			});
 			$(".header-left-submit").click(function(){
 				$(".user").show();
 				$(".toumingceng").show();
