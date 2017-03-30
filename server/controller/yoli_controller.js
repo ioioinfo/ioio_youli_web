@@ -16,7 +16,7 @@ var do_get_method = function(url,cb){
 	uu_request.get(url, function(err, response, body){
 		if (!err && response.statusCode === 200) {
 			var content = JSON.parse(body);
-			cb(false, content);
+			do_result(false, content, cb);
 		} else {
 			cb(true, null);
 		}
@@ -26,11 +26,22 @@ var do_post_method = function(data,url,cb){
 	uu_request.request(url, data, function(err, response, body) {
 		console.log(body);
 		if (!err && response.statusCode === 200) {
-			cb(false,body);
+			do_result(false, body, cb);
 		} else {
 			cb(true,null);
 		}
 	});
+};
+var do_result = function(err,result,cb){
+	if (!err) {
+		if (result.success) {
+			cb(false,result);
+		}else {
+			cb(true,result);
+		}
+	}else {
+		cb(true,null);
+	}
 };
 //登入检查
 var login_check = function(data,cb){
@@ -346,10 +357,11 @@ exports.register = function(server, options, next){
 				var data = request.payload.data;
 				data = JSON.parse(data);
 				tenant_user_create(data,function(err,row){
+					console.log("row:"+JSON.stringify(row));
 					if (!err) {
 						return reply({"success":true,"tenant_user_id":row.tenant_user_id});
 					}else {
-						return reply({"success":false,"message":results.message});
+						return reply({"success":false,"message":row.message});
 					}
 				});
 			}

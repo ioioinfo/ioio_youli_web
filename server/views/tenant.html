@@ -117,8 +117,11 @@
 	<div class="warp">
 		 <div class="right-nav-height">
 			<div class="ad">
+				<div class="ad-word2">商户编号：{{row.code}}</div>
 				<div class="ad-word2">公司名称：{{row.name}}</div>
+				<div class="ad-word2">公司简称：{{row.abbreviation}}</div>
 				<div class="ad-word2">行业领域：{{row.hangye_name}}</div>
+				<div class="ad-word2">保证金：{{row.baozhengjin}}</div>
 				<div class="ad-word2">申请日期：{{row.shenqingriqi}}</div>
 				<a class="ad-word2" href="/logout">退出登入</a>
 			</div>
@@ -150,17 +153,23 @@
 		   <div class=""><%- user.id %></div>
 		   <div class=""><%- user.username %></div>
 		   <div class="ad-word2"><%- user.name %></div>
-		   <div class="ad-word2"><p class="ad-word2-p1">编辑</p><p class="ad-word2-p2">删除</p></div>
+		   <div class="ad-word2">
+			   <p class="ad-word2-p1">编辑</p>
+			   <% if (user.is_system != 1) { %>
+			   		<p class="ad-word2-p2 delete" data-id="<%- user.id %>">删除</p>
+			   <% } %>
+			   <p class="ad-word2-p3 create">新建</p>
+		   </div>
 	   </div>
 	<% }); %>
    </div>
 </script>
 <div class="ad-word2-p1-bianji">
-	<p class="ad-word2-p1-bianji-p1">用户名:<input type="text" name="" value=""></p>
-	<p class="ad-word2-p1-bianji-p2">昵称:<input type="text" name="" value=""></p>
+	<p class="ad-word2-p1-bianji-p1">昵称:<input type="text" name="" value="" class="name"></p>
+	<p class="ad-word2-p1-bianji-p2">密码:<input type="text" name="" value="" class="password"></p>
 	<div class="ad-word2-bianji-button">
 		<input type="submit" name="" value="取 消" class="ad-word2-bianji-no">
-		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes">
+		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes sure">
 	</div>
 </div>
 <script>
@@ -177,6 +186,37 @@
 					$(".ad-word2-p1-bianji").show();
 					$(".toumingceng").show();
 				});
+				//新建
+				$(".create").click(function(){
+					var data = {
+						"tenant_id" : {{row.id}},
+						"username" : "admin01",
+						"password" : 123321,
+						"name" : "{{row.abbreviation}}"
+					};
+					$.post("/tenant_user_create",{"data":JSON.stringify(data)},function(data){
+						if (data.success) {
+							location.href = "/tenant";
+						}else {
+							alert(data.message);
+						}
+					})
+				});
+				//删除
+				$(".delete").click(function(){
+					var data = {
+						"tenant_id" : {{row.id}},
+						"tenant_user_id" : $(this).data("id")
+					};
+					$.post("/tenant_user_delete",{"data":JSON.stringify(data)},function(data){
+						if (data.success) {
+							location.href = "/tenant";
+						}else {
+							alert(data.message);
+						}
+					})
+				});
+
 				$(".ad-word2-bianji-no").click(function(){
 					$(".ad-word2-p1-bianji").hide();
 					$(".toumingceng").hide();
@@ -193,7 +233,23 @@
 				alert(data.message);
 			}
 		})
-
+		$(".sure").click(function(){
+			alert("1223");
+			var data = {
+				"name" : $(".name").val(),
+				"password" : $(".password").val(),
+				"tenant_id" : {{row.id}},
+				"tenant_user_id" : $(".delete").data("id"),
+				"username" : "admin"
+			};
+			$.post("/tenant_user_update",{"data":JSON.stringify(data)},function(data){
+				if (data.success) {
+					location.href = "/tenant";
+				}else {
+					alert(data.message);
+				}
+			})
+		});
 
 
 
