@@ -13,7 +13,7 @@
 	{% for project_info in rows %}
 	  <div class="right-nav-height">
 		<span class="checkbox"><input type="checkbox" name="" value=""></span>
-		<span class="adimg"><img src="http://211.149.248.241:8000/images/youli/{{project_info.main_image_url}}" alt=""></span>
+		<span class="adimg"><img src="{{image_host}}{{project_info.main_image_url}}" alt=""></span>
 		<span class="ad">
 		  <p class="ad-word1">{{project_info.name}} &nbsp;(&nbsp;{{project_info.xiangmuyoushi}}&nbsp;)&nbsp;电话：{{project_info.phone}}</p>
 		   <p class="ad-word1">{{project_info.address}}</p>
