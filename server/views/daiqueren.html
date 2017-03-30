@@ -204,6 +204,7 @@
 {% block script %}
 <script>
 	$(function() {
+		var state = 1;
 		$(".fan1").addClass("bottom-ul-style");
 		$(".sure").click(function(){
 			var project_subscribe_id = $(this).data("id");
@@ -211,12 +212,21 @@
 			$(".jine").focus();
 
 			$("#jine_enter").click(function(){
+				if (state == 0) {
+					return;
+				}
+				state = 0;
 				var contract_amount = $(".jine").val();
 				if (!contract_amount) {
 					alert("请输入消费金额！");
 					return;
 				}
+				if (contract_amount>9999999) {
+					alert("请输入消费金额太高！");
+					return;
+				}
 				$.post("/confirm_order",{"contract_amount":contract_amount,"project_subscribe_id":project_subscribe_id},function(data){
+					state = 1;
 					if (data.success) {
 						alert("操作成功！");
 						location.href ="/daiqueren";

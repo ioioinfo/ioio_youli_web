@@ -254,7 +254,7 @@ exports.register = function(server, options, next){
 				});
 			}
 		},
-		//商家商户账号删除
+		//商家商户账号查询
 		{
 			method: 'GET',
 			path: '/tenant_user_list',
