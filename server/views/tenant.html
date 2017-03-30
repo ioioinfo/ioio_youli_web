@@ -239,8 +239,7 @@
 				"name" : $(".name").val(),
 				"password" : $(".password").val(),
 				"tenant_id" : {{row.id}},
-				"tenant_user_id" : $(".delete").data("id"),
-				"username" : "admin"
+				"tenant_user_id" : $(".delete").data("id")
 			};
 			$.post("/tenant_user_update",{"data":JSON.stringify(data)},function(data){
 				if (data.success) {
