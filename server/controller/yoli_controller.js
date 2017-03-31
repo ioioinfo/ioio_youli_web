@@ -211,6 +211,7 @@ exports.register = function(server, options, next){
 					ep.emit("tenant_info", {});
 				}
 			}else {
+				console.log("row:"+JSON.stringify(row));
 				cb(true,{"message":"search tenant_info wrong","service_info":service_info});
 			}
 		});
@@ -245,11 +246,11 @@ exports.register = function(server, options, next){
 					return reply.redirect("/login");
 				}
 				var is_valid = request.payload.is_valid;
-				var id = request.payload.id;
+				var project_id = request.payload.id;
 				if (!is_valid||!id) {
 					return reply({"success":false,"message":"params wrong"});
 				}
-				var data = {"id":id,"user_id":user_id,"is_valid":is_valid};
+				var data = {"id":project_id,"user_id":user_id,"is_valid":is_valid};
 				search_projects_infos(id,user_id,function(err,results){
 					if (!err) {
 						change_recommender_valid(data,function(err,result){
@@ -660,10 +661,16 @@ exports.register = function(server, options, next){
 				search_projects_infos(id,user_id,function(err,results){
 					if (!err) {
 						daiqueren(id, function(err,rows){
-							console.log("rows:"+JSON.stringify(rows));
 							if (!err) {
 								if (rows.success) {
-									console.log(rows);
+									for (var i = 0; i < rows.rows.length; i++) {
+										var project = rows.rows[i];
+										if (project.recommender_wx_user) {
+											if (project.recommender_valid != 1) {
+												project.recommender_wx_user.mobile = project.recommender_wx_user.mobile.substring(0,project.recommender_wx_user.mobile.length-2)+"**";
+											}
+										}
+									}
 									return reply.view("daiqueren",{"rows":rows.rows,"results":results,"service_info":service_info});
 								}else {
 									return reply({"success":false,"message":"search wrong","service_info":service_info});
