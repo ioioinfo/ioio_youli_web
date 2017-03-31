@@ -3,7 +3,6 @@
 	<style media="screen">
 		.bianji{
 			width: 300px;
-			height: 245px;
 			/*display: none;*/
 			position: absolute;
 			top: 250px;
@@ -174,9 +173,9 @@
 
 		</div>
 		<div class="user bianji">
-			<p>编号：<input type="text" name="" value="" class="add_code"></p>
-			<p>账户<input type="text" name="" value="" class="add_name"></p>
-			<p>昵称:<input type="text" name="" value="" class="add_ab"></p>
+			<p>账户 : <input type="text" name="" value="" class="add_name"></p>
+			<p>密码 : <input type="text" name="" value="" class="add_password"></p>
+			<p>昵称 : <input type="text" name="" value="" class="add_nickname"></p>
 			<p class="user-submit"><input type="submit" name="" value="确 定"  class="user-submit1 user-submit2"></p>
 		</div>
 	</div>
@@ -200,8 +199,9 @@
 			   <p class="ad-word2-p1">编辑</p>
 			   <% if (user.is_system != 1) { %>
 			   		<p class="ad-word2-p2 delete" data-id="<%- user.id %>">删除</p>
+			   <% } else { %>
+				   <p class="ad-word2-p3 create">新建</p>
 			   <% } %>
-			   <p class="ad-word2-p3 create">新建</p>
 		   </div>
 	   </div>
 	<% }); %>
@@ -218,6 +218,32 @@
 <script>
 	$(function() {
 		$(".list-infor6").addClass("hover");
+		var add = function(){
+			if (!$(".add_name").val()) {
+				alert("账号不能为空！");
+				return;
+			}else if (!$(".add_password").val()) {
+				alert("密码不能为空！");
+				return;
+			}else if (!$(".add_nickname").val()) {
+				alert("昵称不能为空！");
+				return;
+			}
+			var data = {
+				"tenant_id" : {{row.id}},
+				"username" : $(".add_name").val(),
+				"password" : $(".add_password").val(),
+				"name" : $(".add_nickname").val()
+			};
+
+			$.post("/tenant_user_create",{"data":JSON.stringify(data)},function(data){
+				if (data.success) {
+					location.href = "/tenant";
+				}else {
+					alert(data.message);
+				}
+			});
+		};
 		$.get("/tenant_user_list",function(data){
 			if (data.success) {
 				var user_list = data.rows;
@@ -231,19 +257,10 @@
 				});
 				//新建
 				$(".create").click(function(){
-					var data = {
-						"tenant_id" : {{row.id}},
-						"username" : "admin01",
-						"password" : 123321,
-						"name" : "{{row.abbreviation}}"
-					};
-					$.post("/tenant_user_create",{"data":JSON.stringify(data)},function(data){
-						if (data.success) {
-							location.href = "/tenant";
-						}else {
-							alert(data.message);
-						}
-					})
+					$(".user.bianji").show();
+					$(".user-submit1.user-submit2").click(function(){
+						add();
+					});
 				});
 				//删除
 				$(".delete").click(function(){
@@ -277,7 +294,6 @@
 			}
 		})
 		$(".sure").click(function(){
-			alert("1223");
 			var data = {
 				"name" : $(".name").val(),
 				"password" : $(".password").val(),
