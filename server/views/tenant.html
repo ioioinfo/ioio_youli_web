@@ -196,7 +196,7 @@
 		   <div class=""><%- user.username %></div>
 		   <div class="ad-word2"><%- user.name %></div>
 		   <div class="ad-word2">
-			   <p class="ad-word2-p1">编辑</p>
+			   <p class="ad-word2-p1" data-id="<%- user.id %>">编辑</p>
 			   <% if (user.is_system != 1) { %>
 			   		<p class="ad-word2-p2 delete" data-id="<%- user.id %>">删除</p>
 			   <% } else { %>
@@ -218,6 +218,7 @@
 <script>
 	$(function() {
 		$(".list-infor6").addClass("hover");
+		//新增
 		var add = function(){
 			if (!$(".add_name").val()) {
 				alert("账号不能为空！");
@@ -244,16 +245,54 @@
 				}
 			});
 		};
+		//修改
+		var update = function(tenant_user_id){
+			if (!$(".name").val()) {
+				alert("昵称不能为空！");
+				return;
+			}else if (!$(".password").val()) {
+				alert("密码不能为空！");
+				return;
+			}
+
+			var data = {
+				"name" : $(".name").val(),
+				"password" : $(".password").val(),
+				"tenant_id" : {{row.id}},
+				"tenant_user_id" : tenant_user_id
+			};
+			$.post("/tenant_user_update",{"data":JSON.stringify(data)},function(data){
+				if (data.success) {
+					location.href = "/tenant";
+				}else {
+					alert(data.message);
+				}
+			})
+		};
 		$.get("/tenant_user_list",function(data){
 			if (data.success) {
 				var user_list = data.rows;
 				console.log(user_list);
 				var t = _.template($("#edit").html());
 				$(".edit_content").html(t({user_list:user_list}));
-
+				//编辑按钮
 				$(".ad-word2 .ad-word2-p1").click(function(){
+					var tenant_user_id = $(this).data("id");
 					$(".ad-word2-p1-bianji").show();
 					$(".toumingceng").show();
+
+					//取消
+					$(".ad-word2-bianji-no").click(function(){
+						$(".ad-word2-p1-bianji").hide();
+						$(".toumingceng").hide();
+					});
+
+					//确认
+					$(".sure").click(function(){
+						update(tenant_user_id);
+						// $(".ad-word2-p1-bianji").hide();
+						// $(".toumingceng").hide();
+					});
 				});
 				//新建
 				$(".create").click(function(){
@@ -277,14 +316,7 @@
 					})
 				});
 
-				$(".ad-word2-bianji-no").click(function(){
-					$(".ad-word2-p1-bianji").hide();
-					$(".toumingceng").hide();
-				});
-				$(".ad-word2-bianji-yes").click(function(){
-					$(".ad-word2-p1-bianji").hide();
-					$(".toumingceng").hide();
-				});
+				//透明层
 				$(".toumingceng").click(function(){
 					$(".ad-word2-p1-bianji").hide();
 					$(".toumingceng").hide();
@@ -293,24 +325,6 @@
 				alert(data.message);
 			}
 		})
-		$(".sure").click(function(){
-			var data = {
-				"name" : $(".name").val(),
-				"password" : $(".password").val(),
-				"tenant_id" : {{row.id}},
-				"tenant_user_id" : $(".delete").data("id")
-			};
-			$.post("/tenant_user_update",{"data":JSON.stringify(data)},function(data){
-				if (data.success) {
-					location.href = "/tenant";
-				}else {
-					alert(data.message);
-				}
-			})
-		});
-
-
-
 	});
 </script>
 {% endblock %}
