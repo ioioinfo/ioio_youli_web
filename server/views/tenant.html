@@ -10,12 +10,22 @@
 			left: 500px;
 			padding: 0 40px;
 		}
+		.warp{
+			overflow: auto;
+		}
 		.edit_content{
 			width: 440px;
 			font-size: 16px;
 			padding-left: 20px;
-			border-bottom: 1px solid #f7f5f7;
-			margin: 0 auto;
+
+			float: left;
+			margin-top: 60px;
+			margin-left: 10px;
+			background: #939393;
+			padding: 3px;
+		}
+		.edit_content_infor{
+			border-bottom: 1px solid #fff;
 		}
 		.user2,.use2-infor{
 			border: 1px solid #f7f5f7;
@@ -26,6 +36,8 @@
 		}
 		.user2{
 			border-bottom: none;
+			height: 24px;
+			line-height: 24px;
 		}
 		.user2 div{
 			display: inline-block;
@@ -111,12 +123,37 @@
 			background: #FF7100;
 			color: #fff;
 		}
+		.right-nav-height .right-nav-height-ad{
+			display: inline-block;
+			width: 260px;
+			background: #48B0F7;
+			border-radius: 4px;
+			color: #fff;
+			padding: 10px 0;
+		}
+		.right-nav-height .right-nav-height-ad .ad-word2{
+			width: 260px;
+			padding-left: 20px;
+			margin: 5px 0;
+			box-sizing: border-box;
+		}
+		.right-nav-height .right-nav-height-ad  a{
+			color: #000;
+			font-weight: 400;
+		}
+		.right-nav-height{
+			width: 260px;
+			float: left;
+			margin-top: 60px;
+			margin-left: 153px;
+			font-size: 14px;
+		}
 	</style>
 {% endblock %}
 {% block content %}
 	<div class="warp">
 		 <div class="right-nav-height">
-			<div class="ad">
+			<div class="ad right-nav-height-ad">
 				<div class="ad-word2">商户编号：{{row.code}}</div>
 				<div class="ad-word2">公司名称：{{row.name}}</div>
 				<div class="ad-word2">公司简称：{{row.abbreviation}}</div>
@@ -147,7 +184,7 @@
 		<div class="ad-word2">昵称</div>
 		<div class="ad-word2">操作</div>
 	</div>
-	<div class="">
+	<div class="edit_content_infor">
 	<% _.forEach(user_list, function(user) {  %>
 	   <div class="use2-infor">
 		   <div class=""><%- user.id %></div>
