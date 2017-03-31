@@ -32,7 +32,6 @@
 	  width: 11.17216%;
 	}
 	.right-nav-height{
-	  height: 118px;
 	  border-bottom: 1px solid #f7f2f7;
 	}
 	.right-nav-height .checkbox{
@@ -53,21 +52,12 @@
 	}
 	.right-nav-height .ad{
 	  width:51.72093%;
-	  height: 118px;
 	  display: inline-block;
 	  vertical-align: middle;
+	  padding-left: 100px;
+	  box-sizing: border-box;
 	}
-	.right-nav-height .ad .ad-word1{
-	  width:96.4%;
-	  font-size: 12px;
-	  color: #646464;
-	  text-align: left;
-	  line-height: 22px;
-	  display: inline-block;
-	  padding-left: 4.4964%;
-	  margin-top: 8px;
-	  text-indent: 0;
-	}
+
 	.right-nav-height .ad .ad-word1 img{
 		vertical-align: middle;
 	margin-top: -3px;
@@ -78,17 +68,10 @@
 	  display: inline-block;
 	  overflow: hidden;
 	}
-	.right-nav-height .ad .ad-word2 .money{
-		display: inline-block;
-		color: #e51c23;
-		line-height: 28px;
-		text-indent: 25px;
-		margin-left: 0
-	}
 	.right-nav-height .ad .ad-word2 .rebate{
 	  display: inline-block;
 	  font-size: 12px;
-	  float: right;
+	  margin-left: 100px;
 	}
 	.right-nav-height .ad .ad-word2 .rebate .rebate1{
 	  display: inline-block;
@@ -149,6 +132,23 @@
 	  border-radius: 4px;
 	  margin-top: 15px;
 	}
+	.cashback .is_valid{
+		padding: 2px;
+		border: none;
+		background: #55ACD7;
+
+		color: #fff;
+		cursor: pointer;
+		border-radius: 2px;
+	}
+	.cashback .is_valid2{
+		padding: 2px;
+		border: none;
+		background: #D0D6D9;
+		color: #9EA6AA;
+		cursor: pointer;
+		border-radius: 2px;
+	}
 	</style>
 {% endblock %}
 
@@ -166,16 +166,16 @@
 	  <div class="right-nav-height">
 		<span class="checkbox"><input type="checkbox" name="" value=""></span>
 		<span class="adimg"><img src="{{image_host}}{{project_info.project.main_image_url}}" alt=""></span>
-		<span class="ad">
+		<div class="ad">
 		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
 		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}</p>
 		    <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
-		</span>
+		</div>
 		<p class="cashback">
 			{% if project_info.recommender_wx_user %}
 				<span>{{project_info.recommender_wx_user.name}}</span><br/>
-				<span>{{project_info.recommender_wx_user.mobile}}</span>
+				<span>{{project_info.recommender_wx_user.mobile}}</span><br/>
 				{% if project_info.recommender_valid == -1 %}
 					状态:
 					<input type="button" name="" value="有效" class="is_valid" data-id="{{project_info.id}}">
