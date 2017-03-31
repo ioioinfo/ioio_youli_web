@@ -172,11 +172,11 @@
 		<div class="edit_content">
 
 		</div>
-		<div class="user bianji">
+		<div class="user bianji hbt">
 			<p>账户 : <input type="text" name="" value="" class="add_name"></p>
 			<p>密码 : <input type="text" name="" value="" class="add_password"></p>
 			<p>昵称 : <input type="text" name="" value="" class="add_nickname"></p>
-			<p class="user-submit"><input type="submit" name="" value="确 定"  class="user-submit1 user-submit2"></p>
+			<p class="user-submit"><input type="submit" name="" value="确 定"  class="user-submit1 user-submit2 add_sure"></p>
 		</div>
 	</div>
 
@@ -207,16 +207,17 @@
 	<% }); %>
    </div>
 </script>
-<div class="ad-word2-p1-bianji">
+<div class="ad-word2-p1-bianji hbt">
 	<p class="ad-word2-p1-bianji-p1">昵称:<input type="text" name="" value="" class="name"></p>
 	<p class="ad-word2-p1-bianji-p2">密码:<input type="text" name="" value="" class="password"></p>
 	<div class="ad-word2-bianji-button">
 		<input type="submit" name="" value="取 消" class="ad-word2-bianji-no">
-		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes sure">
+		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes sure_confirm">
 	</div>
 </div>
 <script>
 	$(function() {
+		var tenant_user_id;
 		$(".list-infor6").addClass("hover");
 		//新增
 		var add = function(){
@@ -246,7 +247,7 @@
 			});
 		};
 		//修改
-		var update = function(tenant_user_id){
+		var update = function(){
 			if (!$(".name").val()) {
 				alert("昵称不能为空！");
 				return;
@@ -277,29 +278,31 @@
 				$(".edit_content").html(t({user_list:user_list}));
 				//编辑按钮
 				$(".ad-word2 .ad-word2-p1").click(function(){
-					var tenant_user_id = $(this).data("id");
+					tenant_user_id = $(this).data("id");
 					$(".ad-word2-p1-bianji").show();
-					$(".toumingceng").show();
-
-					//取消
-					$(".ad-word2-bianji-no").click(function(){
-						$(".ad-word2-p1-bianji").hide();
-						$(".toumingceng").hide();
-					});
-
-					//确认
-					$(".sure").click(function(){
-						update(tenant_user_id);
-						// $(".ad-word2-p1-bianji").hide();
-						// $(".toumingceng").hide();
-					});
+					$(".layout_toumingceng").show();
 				});
+				//取消
+				$(".ad-word2-bianji-no").click(function(){
+					$(".ad-word2-p1-bianji").hide();
+					$(".layout_toumingceng").hide();
+				});
+				//确认
+				$(".sure_confirm").click(function(e){
+					e.preventDefault();
+					update();
+				});
+
 				//新建
 				$(".create").click(function(){
 					$(".user.bianji").show();
-					$(".user-submit1.user-submit2").click(function(){
-						add();
-					});
+					$(".layout_toumingceng").show();
+
+				});
+				//新建
+				$(".add_sure").click(function(e){
+					e.preventDefault();
+					add();
 				});
 				//删除
 				$(".delete").click(function(){
@@ -315,12 +318,6 @@
 						}
 					})
 				});
-
-				//透明层
-				$(".toumingceng").click(function(){
-					$(".ad-word2-p1-bianji").hide();
-					$(".toumingceng").hide();
-				})
 			}else {
 				alert(data.message);
 			}

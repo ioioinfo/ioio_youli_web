@@ -521,7 +521,7 @@
        background: #D0D6D9;
        color: #9EA6AA;
    }
-   .toumingceng{
+   .layout_toumingceng{
 	   position: absolute;
 	   top: 0;
 	   left: 0;
@@ -653,16 +653,16 @@
       <span>上海佑佑信息科技有限公司开发</span>
     </div>
 	<!-- 用户信息 -->
-	<div class="user user_head">
+	<div class="user user_head hbt">
         <p id="Title">商家信息</p>
 		<p>编号：&nbsp;<input type="text" name="" value="{{results.login_user.id}}"></p>
 		<p>昵称：&nbsp;<input type="text" name="" value="{{results.login_user.name}}"></p>
 		<p>帐号:    &nbsp;<input type="text" name="" value="xxxxxxx"></p>
 		<p>密码:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
 		<p>手机号:    &nbsp;<input type="text" name="" value="xxxxxxxxx"></p>
-		<p class="user-submit"><input type="submit" name="" value="注 销" class="logout"><input type="submit" name="" value="确 定"  class="user-submit1"></p>
+		<p class="user-submit"><input type="submit" name="" value="注 销" class="logout"><input type="submit" name="" value="确 定"  class="user-submit1 user_head_submit"></p>
 	</div>
-	<div class="toumingceng"> </div>
+	<div class="layout_toumingceng hbt"> </div>
 	<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script src="js/lodash.min.js" type="text/javascript"></script>
 	<script src="js/jquery.ui.widget.js" type="text/javascript"></script>
@@ -674,21 +674,19 @@
 				location.href="/logout";
 			});
 			$(".header-left-submit").click(function(){
-				$(".user_head").show();
-				$(".toumingceng").show();
+				$(".hbt").show();
+				$(".layout_toumingceng").show();
 			});
-			$(".user-submit1").click(function(){
-				$(".user_head").hide();
-				$(".toumingceng").hide();
+			$(".user_head_submit").click(function(){
+				$(".hbt").hide();
+				$(".layout_toumingceng").hide();
 			})
 			$(".table-submit").click(function(){
 				$(".grant").show();
-				$(".toumingceng").show();
+				$(".layout_toumingceng").show();
 			});
-			$(".toumingceng").click(function(){
-				$(".grant").hide();
-				$(".toumingceng").hide();
-				$(".user_head").hide();
+			$(".layout_toumingceng").click(function(){
+				$(".hbt").hide();
 			})
 		});
 	</script>
