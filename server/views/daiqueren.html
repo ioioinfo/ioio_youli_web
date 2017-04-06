@@ -148,7 +148,7 @@
 		color: #9EA6AA;
 		cursor: pointer;
 		border-radius: 2px;
-	} 
+	}
 	</style>
 {% endblock %}
 
@@ -187,7 +187,7 @@
 				{% endif %}
 			{% endif %}
 		</p>
-		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p>拒绝</p></div>
+		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p class="refuse" data-id="{{project_info.id}}">拒绝</p></div>
 	  </div>
 	{% endfor %}
 {% endif %}
@@ -251,6 +251,24 @@
 			});
 			$("#jine_cancel").click(function(){
 				$(".jine_info").attr("style","display:none;");
+			});
+		});
+		$(".refuse").click(function(){
+			if(!confirm("是否要确认拒绝？")){
+				return;
+			}
+			var id = $(this).data("id");
+			var reason = "根本没消费";
+			if (!id || !reason) {
+				return;
+			}
+			$.post("/refuse",{id:id,reason:reason},function(data){
+				if (data.success) {
+					alert("成功！");
+					location.href = "/daiqueren";
+				}else {
+					alert(data.message);
+				}
 			});
 		});
 		$(".is_valid").click(function(){

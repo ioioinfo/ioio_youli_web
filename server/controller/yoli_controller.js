@@ -182,7 +182,11 @@ var tenant_user_delete = function(data,cb){
 };
 //改变推荐人是否有效接口
 var change_recommender_valid = function(data,cb){
-	var url = youli_service + "/shop/orders/change_recommender_valid"
+	var url = youli_service + "/shop/orders/shangjia_reject"
+	do_post_method(data,url,cb);
+}
+var refuse = function(data,cb){
+	var url = youli_service + "/shop/orders/shangjia_reject"
 	do_post_method(data,url,cb);
 }
 exports.register = function(server, options, next){
@@ -232,6 +236,34 @@ exports.register = function(server, options, next){
 		});
 	};
 	server.route([
+		//商家商户账号删除
+		{
+			method: 'POST',
+			path: '/refuse',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var project_subscribe_id = request.payload.id;
+				var reject_reason = request.payload.reason;
+				if (!project_subscribe_id || !reject_reason) {
+					return reply({"success":false,"message":"params wrong!"});
+				}
+				var data = {"project_subscribe_id":project_subscribe_id,"reject_reason":reject_reason};
+				refuse(data,function(err,content){
+					if (!err) {
+						return reply({"success":true});
+					}else {
+						return reply({"success":false,"message":content.message});
+					}
+				});
+			}
+		},
 		//推荐人有效的 接口
 		{
 			method: 'POST',
