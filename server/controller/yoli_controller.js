@@ -182,9 +182,22 @@ var tenant_user_delete = function(data,cb){
 };
 //改变推荐人是否有效接口
 var change_recommender_valid = function(data,cb){
-	var url = youli_service + "/shop/orders/change_recommender_valid"
+	var url = youli_service + "/shop/orders/shangjia_reject"
 	do_post_method(data,url,cb);
 }
+var refuse = function(data,cb){
+	var url = youli_service + "/shop/orders/shangjia_reject"
+	do_post_method(data,url,cb);
+}
+//返利统计
+var list_wancheng_subscribes = function(tenant_id,cb){
+	var url = youli_service + "/bi/list_wancheng_subscribes?tenant_id=" + tenant_id;
+	do_get_method(url,cb);
+};
+var list_wancheng_subscribes_date = function(tenant_id,begin_date,end_date,cb){
+	var url = youli_service + "/bi/list_wancheng_subscribes?tenant_id=" + tenant_id+ "&begin_date=" +begin_date +"&end_date="+end_date;
+	do_get_method(url,cb);
+};
 exports.register = function(server, options, next){
 	var search_projects_infos = function(id,user_id,cb){
 		var ep =  eventproxy.create("tenant_info","project_num_info","subscribes_num_info","login_user",function(tenant_info,project_num_info,subscribes_num_info,login_user){
@@ -232,6 +245,34 @@ exports.register = function(server, options, next){
 		});
 	};
 	server.route([
+		//商家商户账号删除
+		{
+			method: 'POST',
+			path: '/refuse',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				var project_subscribe_id = request.payload.id;
+				var reject_reason = request.payload.reason;
+				if (!project_subscribe_id || !reject_reason) {
+					return reply({"success":false,"message":"params wrong!"});
+				}
+				var data = {"project_subscribe_id":project_subscribe_id,"reject_reason":reject_reason};
+				refuse(data,function(err,content){
+					if (!err) {
+						return reply({"success":true});
+					}else {
+						return reply({"success":false,"message":content.message});
+					}
+				});
+			}
+		},
 		//推荐人有效的 接口
 		{
 			method: 'POST',
@@ -796,13 +837,33 @@ exports.register = function(server, options, next){
 				if (!id) {
 					return reply.redirect("/login");
 				}
+				console.log("id:"+id);
 				var user_id = get_user_id(request);
 				if (!user_id) {
 					return reply.redirect("/login");
 				}
+				var begin_date = request.query.begin_date;
+				var end_date = request.query.end_date;
 				search_projects_infos(id,user_id,function(err,results){
 					if (!err) {
-						return reply.view("fanli_tongji",{"results":results,"service_info":service_info});
+						if (!begin_date||!end_date) {
+							list_wancheng_subscribes(id,function(err,rows){
+								if (!err) {
+									console.log("rows:"+JSON.stringify(rows));
+									return reply.view("fanli_tongji",{"rows":rows.rows,"service_info":service_info,"results":results});
+								}else {
+									return reply({"success":false,"message":rows.message,"service_info":results.service_info});
+								}
+							});
+						}else {
+							list_wancheng_subscribes_date(id,begin_date,end_date,function(err,rows){
+								if (!err) {
+									return reply.view("fanli_tongji",{"rows":rows.rows,"service_info":service_info,"results":results});
+								}else {
+									return reply({"success":false,"message":rows.message,"service_info":results.service_info});
+								}
+							});
+						}
 					}else {
 						return reply({"success":false,"message":results.message,"service_info":results.service_info});
 					}

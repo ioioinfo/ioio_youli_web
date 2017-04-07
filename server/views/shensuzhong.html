@@ -182,9 +182,26 @@
 		  <p class="ad-word1"><img src="{{project_info.wx_user.headimgurl}}" width="20px" alt=""/> {{project_info.wx_user.name}}&nbsp; {{project_info.wx_user.nickname}} &nbsp; {{project_info.wx_user.mobile}} </p>
 		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
-		    <div class="ad-word2"><span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;<a target="_blank" href="{{image_host}}{{project_info.file_name}}"><img src="{{image_host}}{{project_info.file_name}}" style="width:20px;height:20px;vertical-align: middle;margin-left:5px;";/></a>申诉原因：{{project_info.shensu_reason}}</span>	<p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
+		    <div class="ad-word2">
+				<span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;
+					{% for file_name in project_info.file_names %}
+						<a target="_blank" href="{{image_host}}{{file_name}}">
+							<img src="{{image_host}}{{file_name}}" style="width:20px;height:20px;vertical-align: middle;margin-left:5px;";/>
+						</a>
+					{% endfor %}
+					申诉原因：{{project_info.shensu_reason}}
+				</span>
+					<p class="rebate">
+						<span class="rebate1">预约返利{{project_info.project.fanli_text}}</span>
+						<span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span>
+					</p>
+			</div>
 		</span>
+<<<<<<< HEAD
 		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p class="operation_no">拒绝</p></div>
+=======
+		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p data-id="{{project_info.id}}" class="refuse">拒绝</p></div>
+>>>>>>> origin/master
 			<span>jdsfoisjo</span>
 		</p>
 	  </div>
@@ -228,6 +245,24 @@
 <script>
 	$(function() {
 		var state = 1;
+		$(".refuse").click(function(){
+			if(!confirm("是否要确认拒绝？")){
+				return;
+			}
+			var id = $(this).data("id");
+			var reason = "根本没消费";
+			if (!id || !reason) {
+				return;
+			}
+			$.post("/refuse",{id:id,reason:reason},function(data){
+				if (data.success) {
+					alert("成功！");
+					location.href = "/daiqueren";
+				}else {
+					alert(data.message);
+				}
+			});
+		});
 		$(".fan4").addClass("bottom-ul-style");
 		$(".sure").click(function(){
 			var project_subscribe_id = $(this).data("id");

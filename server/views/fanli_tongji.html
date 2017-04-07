@@ -160,19 +160,28 @@
 {% block content %}
 <div class="right-table">
 	<ul class="table-head">
+		<li>开始日期<input type="date" value="" class="begin_date"/></li>
+		<li>结束日期<input type="date" value="" class="end_date"/></li>
+		<li class="search">查询<li/>
+	</ul>
+	<ul class="table-head">
 		<li>序号</li>
 		<li>项目名称</li>
 		<li>返利人数</li>
 		<li>返利金额</li>
 	</ul>
-	<ul class="table-infor">
-		<li>001</li>
-		<li>新东方</li>
-		<li>1</li>
-		<li>1000</li>
-	</ul>
+	{% if rows.length ==0 %}
 
-
+	{% else %}
+		{% for row in rows %}
+			<ul class="table-infor">
+				<li>{{row.id}}</li>
+				<li>{{row.project_id}}</li>
+				<li>{{row.wx_user_id}}</li>
+				<li>{{row.shiji_fanli_amount}}</li>
+			</ul>
+		{% endfor %}
+	{% endif %}
 </div>
 
 {% endblock %}
@@ -180,6 +189,14 @@
 <script>
 	$(function() {
 		$(".fan5").addClass("bottom-ul-style");
+		$(".search").click(function(){
+			var begin_date = $(".begin_date").val();
+			var end_date = $(".end_date").val();
+			if (!begin_date || !end_date) {
+				return;
+			}
+			location.href = "/fanli_tongji?begin_date=" +begin_date +"&end_date="+end_date;
+		});
 	});
 </script>
 {% endblock %}
