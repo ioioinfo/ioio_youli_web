@@ -1,39 +1,169 @@
 {% extends 'layout.html' %}
 {% block style %}
 	<style media="screen">
+	body{
+		position: relative;
+	}
+	p{
+		padding: 0;
+		margin:0;
+	}
+	.alertWrap{
+		width: 360px;
+		height: 190px;
+		position: absolute;
+		top: 200px;
+		left: 35.8461%;
+		background: #fff;
+		border-radius: 4px;
+		border: 4px solid #E6E6FA;
+		z-index: 999;
+		display: none;
+	}
+	.alertTitle{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		text-indent: 10px;
+		font-size: 14px;
+		color: #666;
+		font-weight: bold;
+		background: #F7F7F7;
+		box-shadow: 1px 1px 7px  #E0EEEE;
+	}
+	.alertInfor{
+		width: 100%;
+		height: 24px;
+		line-height: 24px;
+		font-size: 12px;
+		color: #565656;
+		text-align: center;
+		margin-top: 30px;
+	}
+	.alertSubmit{
+		text-align: center;
+		margin-top: 36px;
+	}
+	.alertSubmit span:first-child{
+		margin-right: 20px;;
+		height: 30px;
+		line-height: 30px;
+		background: #1B9AF7;
+	}
+	.alertSubmit span:first-child:hover{
+		background-color: #1B9AF7;
+		border-color: #1B9AF7;
+		opacity: 0.9;
+		color: #FFF;
+	}
+	.alertSubmit span:last-child{
+		margin-left: 20px;
+		height: 30px;
+		line-height: 30px;
+	}
+	.alertSubmit span:first-child {
+	    margin-right: 20px;
+	    height: 30px;
+	    line-height: 30px;
+	    background: #1B9AF7;
+	}
+	.button-action, .button-action-flat {
+	    border-color: #A5DE37;
+	    color: #FFF;
+	}
+	.button {
+	    font-weight: 300;
+	    font-size: 16px;
+	    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	    text-decoration: none;
+	    text-align: center;
+	    padding: 0 40px;
+	    margin: 0;
+	    display: inline-block;
+	    cursor: pointer;
+	    border: none;
+	    -webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	    -webkit-transition-property: all;
+	    transition-property: all;
+	    -webkit-transition-duration: .3s;
+	    transition-duration: .3s;
+	}
+	.alertSubmit span:first-child:hover {
+	  background-color: #1B9AF7;
+      border-color: #1B9AF7;
+      opacity: 0.9;
+      color: #FFF;
+	}
+	.button-action, .button-action-flat {
+	  background-color: #A5DE37;
+      border-color: #A5DE37;
+      color: #FFF;
+	}
+	.button {
+	  font-weight: 300;
+	  font-size: 16px;
+   	  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	  text-decoration: none;
+	  text-align: center;
+	  line-height: 40px;
+	  height: 40px;
+	  padding: 0 40px;
+	  margin: 0;
+	  display: inline-block;
+	  cursor: pointer;
+	  border: none;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	  -webkit-transition-property: all;
+	  transition-property: all;
+	 -webkit-transition-duration: .3s;
+	 transition-duration: .3s;
+	}
+	.alertSubmit span:last-child:hover {
+	  background-color: #b9e563;
+      border-color: #b9e563;
+      color: #FFF;
+	}
 	.right-nav-height {
 		height: 160px;
-		}
-		.right-nav-height .shensu{
-			font-size:12px;
-			color:#000;
-			padding: 0 20px;
-			box-sizing: border-box;
-			line-height: 20px;
-			height: 20px;
-		}
-		.right-nav-height .shensu span{
-			display: inline-block;
-			margin-left: 10px;
-			color: red;
-		}
-		.right-nav-height .shensu img{
-			width: 20px;
-			height: 20px;
-			vertical-align: middle;
+	}
+	.right-nav-height .shensu{
+		font-size:12px;
+		color:#000;
+		padding: 0 20px;
+		box-sizing: border-box;
+		line-height: 20px;
+		height: 20px;
+	}
+	.right-nav-height .shensu span{
+		display: inline-block;
+		margin-left: 10px;
+		color: red;
+	}
+	.right-nav-height .shensu img{
+		width: 20px;
+		height: 20px;
+		vertical-align: middle;
 
-		}
-		.right-nav-height .ad .ad-word2 .money{
-			width: 50%;
+	}
+	.right-nav-height .ad .ad-word2 .money{
+		width: 50%;
           	-webkit-box-orient: vertical;
-	          overflow: hidden;
+          overflow: hidden;
 
-		}
-		.right-nav-height .ad .ad-word2 .rebate{
-			width: 36%;
-			margin-right: 0;
-			vertical-align: top;
-		}
+	}
+	.right-nav-height .ad .ad-word2 .rebate{
+		width: 36%;
+		margin-right: 0;
+		vertical-align: top;
+	}
+	.right-nav-height .ad .ad-word2 .rebate{
+		margin-left: 0;
+	}
 	</style>
 {% endblock %}
 {% block content %}
@@ -54,9 +184,17 @@
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
 		    <div class="ad-word2"><span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;<a target="_blank" href="{{image_host}}{{project_info.file_name}}"><img src="{{image_host}}{{project_info.file_name}}" style="width:20px;height:20px;vertical-align: middle;margin-left:5px;";/></a>申诉原因：{{project_info.shensu_reason}}</span>	<p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
-		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p>拒绝</p></div>
+		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p class="operation_no">拒绝</p></div>
 			<span>jdsfoisjo</span>
 		</p>
+	  </div>
+	  <div class="alertWrap">
+	  	<p class="alertTitle">系统提示</p>
+	  	<p class="alertInfor">是否确认拒绝？</p>
+	  	<p class="alertSubmit">
+	  		 <span class="button button-action alertSubmitNo">取 消</span>
+	  		 <span class="button button-action alertSubmitYes">确 认</span>
+	  	 </p>
 	  </div>
 	{% endfor %}
 {% endif %}
@@ -84,6 +222,8 @@
 </div>
 {% endif %}
 {% endblock %}
+
+
 {% block script %}
 <script>
 	$(function() {
@@ -105,7 +245,7 @@
 					return;
 				}
 				if (contract_amount>9999999) {
-					alert("请输入消费金额太高！");
+					alert("输入消费金额太高！");
 					return;
 				}
 				$.post("/confirm_order",{"contract_amount":contract_amount,"project_subscribe_id":project_subscribe_id},function(data){
@@ -122,6 +262,22 @@
 				$(".jine_info").attr("style","display:none;");
 			});
 		});
+
+		$(".operation_no").click(function(){
+			$(".alertWrap").show();
+			$(".layout_toumingceng").show();
+		});
+		$(".alertSubmitNo").click(function(){
+			$(".alertWrap").hide();
+			$(".layout_toumingceng").hide();
+		});
+		$(".alertSubmitYes").click(function(){
+			$(".alertWrap").hide();
+			$(".layout_toumingceng").hide();
+		});
+		$(".layout_toumingceng").click(function(){
+			$(".alertWrap").hide();
+		})
 	});
 </script>
 {% endblock %}
