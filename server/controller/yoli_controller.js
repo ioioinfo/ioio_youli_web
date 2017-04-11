@@ -672,6 +672,17 @@ exports.register = function(server, options, next){
 							if (!err) {
 								if (rows.success) {
 									console.log(rows);
+									for (var i = 0; i < rows.rows.length; i++) {
+										var project = rows.rows[i];
+										if (project.wx_user) {
+											project.wx_user.mobile  = project.wx_user.mobile.substring(0,project.wx_user.mobile.length-2)+"**";
+										}
+										// if (project.recommender_wx_user) {
+										// 	if (project.recommender_valid != 1) {
+										// 		project.recommender_wx_user.mobile = project.recommender_wx_user.mobile.substring(0,project.recommender_wx_user.mobile.length-2)+"**";
+										// 	}
+										// }
+									}
 									return reply.view("customer_order",{"rows":rows.rows,"results":results,"service_info":service_info});
 								}else {
 									return reply({"success":false,"message":"search wrong","service_info":service_info});
@@ -704,14 +715,6 @@ exports.register = function(server, options, next){
 						daiqueren(id, function(err,rows){
 							if (!err) {
 								if (rows.success) {
-									for (var i = 0; i < rows.rows.length; i++) {
-										var project = rows.rows[i];
-										if (project.recommender_wx_user) {
-											if (project.recommender_valid != 1) {
-												project.recommender_wx_user.mobile = project.recommender_wx_user.mobile.substring(0,project.recommender_wx_user.mobile.length-2)+"**";
-											}
-										}
-									}
 									return reply.view("daiqueren",{"rows":rows.rows,"results":results,"service_info":service_info});
 								}else {
 									return reply({"success":false,"message":"search wrong","service_info":service_info});
