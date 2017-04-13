@@ -187,7 +187,7 @@ var tenant_user_delete = function(data,cb){
 };
 //改变推荐人是否有效接口
 var change_recommender_valid = function(data,cb){
-	var url = youli_service + "/shop/orders/shangjia_reject"
+	var url = youli_service + "/shop/orders/change_recommender_valid"
 	do_post_method(data,url,cb);
 }
 var refuse = function(data,cb){
