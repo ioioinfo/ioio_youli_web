@@ -183,13 +183,8 @@
 		  <p class="ad-word1">{{project_info.project.name}}&nbsp;{{project_info.project.address}} </p>
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
 		    <div class="ad-word2">
-				<span class="money">返利确认金额：{{project_info.contract_amount_text}}元&nbsp;
-					{% for file_name in project_info.file_names %}
-						<a target="_blank" href="{{image_host}}{{file_name}}">
-							<img src="{{image_host}}{{file_name}}" style="width:20px;height:20px;vertical-align: middle;margin-left:5px;";/>
-						</a>
-					{% endfor %}
-					申诉原因：{{project_info.shensu_reason}}
+				<span class="money">
+					拒绝原因：{{project_info.reject_reason}}
 				</span>
 					<p class="rebate">
 						<span class="rebate1">预约返利{{project_info.project.fanli_text}}</span>

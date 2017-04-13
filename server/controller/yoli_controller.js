@@ -115,6 +115,11 @@ var yiwancheng = function(id,cb){
 	var url = youli_service + "/shop/orders/yiwancheng?tenant_id=" + id;
 	do_get_method(url,cb);
 };
+//获取商家已拒绝项目
+var yijujue = function(id,cb){
+	var url = youli_service + "/shop/orders/yijujue?tenant_id=" + id;
+	do_get_method(url,cb);
+};
 //获取商家申诉项目
 var shensuzhong = function(id,cb){
 	var url = youli_service + "/shop/orders/shensuzhong?tenant_id=" + id;
@@ -784,6 +789,40 @@ exports.register = function(server, options, next){
 								if (rows.success) {
 									console.log(rows);
 									return reply.view("yiwancheng",{"rows":rows.rows,"results":results,"service_info":service_info});
+								}else {
+									return reply({"success":false,"message":"search wrong","service_info":service_info});
+								}
+							}else {
+								return reply({"success":false,"message":"search wrong","service_info":service_info});
+							}
+						});
+					}else {
+						return reply({"success":false,"message":results.message,"service_info":results.service_info});
+					}
+				});
+			}
+		},
+		//商家已拒绝列表
+		{
+			method: 'GET',
+			path: '/yijujue',
+			handler: function(request, reply){
+				var id = get_cookie_id(request);
+				if (!id) {
+					return reply.redirect("/login");
+				}
+				var user_id = get_user_id(request);
+				if (!user_id) {
+					return reply.redirect("/login");
+				}
+				search_projects_infos(id,user_id,function(err,results){
+					if (!err) {
+						yijujue(id, function(err,rows){
+							console.log("rows:"+JSON.stringify(rows));
+							if (!err) {
+								if (rows.success) {
+									console.log(rows);
+									return reply.view("yijujue",{"rows":rows.rows,"results":results,"service_info":service_info});
 								}else {
 									return reply({"success":false,"message":"search wrong","service_info":service_info});
 								}
