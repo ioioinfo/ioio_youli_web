@@ -1,7 +1,88 @@
 {% extends 'layout.html' %}
+{% block style %}
+    <style media="screen">
+
+    .top .right-nav-height .ad .ad-word1{
+	    width: 100%;
+	    padding-left: 100px;
+		text-indent: 0;
+        margin-left: 0;
+	}
+    .top .right-nav span:first-child{
+	  width: 4.578754%;
+	}
+	.top .right-nav span:nth-child(4n+2){
+	  width: 11.17216%;
+	}
+    .top .right-nav span:nth-child(4n+3){
+	  width: 57.6923%;
+	}
+	.top .right-nav span:last-child{
+	  width: 26.17216%;
+	}
+    .right-nav-height .ad{
+        width:58.60465%;
+  	  display: inline-block;
+  	  vertical-align: middle;
+  	  box-sizing: border-box;
+    }
+    .right-nav-height .cashback{
+        display: inline-block;
+        width: 21.17216%;
+        height: 118px;
+
+        line-height: 30px;
+        vertical-align: top;
+        font-size: 14px;
+        color: #000;
+        overflow: hidden;
+        padding-left: 53px;
+        padding-top: 30px;
+        box-sizing: border-box;
+    }
+    .right-nav-height .cashback input{
+        margin-left: 10px;
+        vertical-align: sub;
+    }
+    .right-nav-height .cashback span{
+        display: inline-block;
+    }
+    .right-nav-height .cashback span:last-child{
+        margin-left: 20px;
+    }
+    .right-nav-height .operation p:first-child{
+      background: #ffa726;
+      border-radius: 4px;
+
+    }
+    .right-nav-height .operation p:last-child{
+      background: #ab47bc;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+    .cashback .is_valid{
+        padding: 2px;
+        border: none;
+        background: #55ACD7;
+
+        color: #fff;
+        cursor: pointer;
+        border-radius: 2px;
+    }
+    .cashback .is_valid2{
+        padding: 2px;
+        border: none;
+        background: #D0D6D9;
+        color: #9EA6AA;
+        cursor: pointer;
+        border-radius: 2px;
+    }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="right-nav">
-  <span>&nbsp;</span><span>图片</span><span class="word-information">文字信息</span>
+  <span>&nbsp;</span><span>图片</span><span class="word-information">文字信息</span><span>推荐人信息</span>
 </div>
 <div class="warp">
 {% if rows.length ==0 %}
@@ -17,6 +98,15 @@
 		  <p class="ad-word1">预约时间：&nbsp;{{project_info.subscribe_time_text}}&nbsp;{% if project_info.recommender_wx_user %}推荐人:{{project_info.recommender_wx_user.name}}&nbsp; {{project_info.recommender_wx_user.mobile}}{% endif %}</p>
 		  <div class="ad-word2"><span class="money">{{project_info.project.price_text}}</span><p class="rebate"><span class="rebate1">预约返利{{project_info.project.fanli_text}}</span><span class="rebate1">推荐返利{{project_info.project.tuijian_fanli_text}}</span></p></div>
 		</span>
+        <p class="cashback">
+				<span></span><br/>
+				<span></span><br/>
+					状态:
+					<input type="button" name="" value="有效" class="is_valid" data-id="{{project_info.id}}">
+					<input type="button" name="" value="无效" class="is_valid2" data-id="{{project_info.id}}">
+					<span>推荐有效</span>
+					<span>推荐无效</span>
+		</p>
 	  </div>
 	{% endfor %}
 {% endif %}
