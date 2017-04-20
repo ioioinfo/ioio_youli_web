@@ -679,7 +679,7 @@ exports.register = function(server, options, next){
 									console.log(rows);
 									for (var i = 0; i < rows.rows.length; i++) {
 										var project = rows.rows[i];
-										if (project.wx_user) {
+										if (project.recommender_wx_user) {
 										    if (project.recommender_valid != 1) {
 											    project.wx_user.mobile  = project.wx_user.mobile.substring(0,project.wx_user.mobile.length-2)+"**";
                                             }
