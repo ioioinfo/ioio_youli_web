@@ -165,20 +165,26 @@
 		<li class="search">查询<li/>
 	</ul>
 	<ul class="table-head">
-		<li>序号</li>
+		<li>商户名称</li>
 		<li>项目名称</li>
-		<li>返利人数</li>
+		<li>预约时间</li>
+		<li>返利人</li>
 		<li>返利金额</li>
+		<li>推荐人</li>
+		<li>推荐金额</li>
 	</ul>
 	{% if rows.length ==0 %}
 
 	{% else %}
 		{% for row in rows %}
 			<ul class="table-infor">
-				<li>{{row.id}}</li>
-				<li>{{row.project_id}}</li>
-				<li>{{row.wx_user_id}}</li>
+				<li>{{row.project.tenant.abbreviation}}</li>
+				<li>{{row.project.name}}</li>
+				<li>{{row.created_at_text}}</li>
+				<li>{{row.wx_user.name}}</li>
 				<li>{{row.shiji_fanli_amount}}</li>
+				<li>{{row.recommender_wx_user.name}}</li>
+				<li>{{row.shiji_tuijian_fanli_amount}}</li>
 			</ul>
 		{% endfor %}
 	{% endif %}
