@@ -77,11 +77,11 @@
 			border-bottom: none;
 		}
 		.ad-word2-p1-bianji{
-			width: 200px;
-			height: 100px;
+			width: 252px;
+			height: 153px;
 			border-radius: 4px;
 			background: #fff;
-
+			padding-top: 20px;
 			position: absolute;
 			top: 300px;
 			left: 50.3%;
@@ -94,10 +94,10 @@
 			color: #666;
 		}
 		.ad-word2-p1-bianji .ad-word2-p1-bianji-p2{
-			margin-left: 19px;
+			margin-left: 13px;
 		}
 		.ad-word2-p1-bianji p input{
-			width: 120px;
+			width: 163px;
 			height: 20px;
 			line-height: 20px;
 			border: none;
@@ -108,17 +108,17 @@
 		.ad-word2-bianji-button{
 			width: 100%;
 			text-align: center;
-			margin-top: 10px;
+			margin-top: 27px;
 		}
 		.ad-word2-bianji-button input{
 			width: 53px;
 			border: none;
 			border-radius: 4px;
-			height: 20px;
+			height: 27px;
 
 		}
 		.ad-word2-bianji-no{
-			margin-left: 15px;
+			margin-right: 35px;
 			color: #666;
 		}
 		.ad-word2-bianji-yes{
@@ -152,6 +152,11 @@
 			margin-top: 60px;
 			margin-left: 153px;
 			font-size: 14px;
+		}
+
+		.ad-word2-p1-bianji-p2-span{
+			display: inline-block;
+			width: 50px;
 		}
 	</style>
 {% endblock %}
@@ -208,8 +213,9 @@
    </div>
 </script>
 <div class="ad-word2-p1-bianji hbt">
-	<p class="ad-word2-p1-bianji-p1">昵称:<input type="text" name="" value="" class="name"></p>
-	<p class="ad-word2-p1-bianji-p2">密码:<input type="text" name="" value="" class="password"></p>
+	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">原密码</span>:<input type="text" name="" value="" class="name"></p>
+	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">新密码</span>:<input type="text" name="" value="" class="password"></p>
+	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">再次输入</span>:<input type="text" name="" value="" class="name"></p>
 	<div class="ad-word2-bianji-button">
 		<input type="submit" name="" value="取 消" class="ad-word2-bianji-no">
 		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes sure_confirm">
