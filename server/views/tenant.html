@@ -215,7 +215,7 @@
 <div class="ad-word2-p1-bianji hbt">
 	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">原密码</span>:<input type="text" name="" value="" class="name"></p>
 	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">新密码</span>:<input type="text" name="" value="" class="password"></p>
-	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">再次输入</span>:<input type="text" name="" value="" class="name"></p>
+	<p class="ad-word2-p1-bianji-p2"><span class="ad-word2-p1-bianji-p2-span">再次输入</span>:<input type="text" name="" value="" class="password2"></p>
 	<div class="ad-word2-bianji-button">
 		<input type="submit" name="" value="取 消" class="ad-word2-bianji-no">
 		<input type="submit" name="" value="确 定" class="ad-word2-bianji-yes sure_confirm">
@@ -255,15 +255,21 @@
 		//修改
 		var update = function(){
 			if (!$(".name").val()) {
-				alert("昵称不能为空！");
+				alert("原密码不能为空！");
 				return;
 			}else if (!$(".password").val()) {
 				alert("密码不能为空！");
 				return;
+			}else if (!$(".password2").val()) {
+				alert("再次输入不能为空！");
+				return;
+			}else if ($(".password2").val()!=$(".password").val()) {
+				alert("2次密码不相同！");
+				return;
 			}
 
 			var data = {
-				"name" : $(".name").val(),
+				"old_password" : $(".name").val(),
 				"password" : $(".password").val(),
 				"tenant_id" : {{row.id}},
 				"tenant_user_id" : tenant_user_id
