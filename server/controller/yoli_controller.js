@@ -383,7 +383,7 @@ exports.register = function(server, options, next){
 					if (!err) {
 						return reply({"success":true});
 					}else {
-						return reply({"success":false,"message":results.message});
+						return reply({"success":false,"message":row.message});
 					}
 				});
 			}
