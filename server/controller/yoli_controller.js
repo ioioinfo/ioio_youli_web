@@ -6,6 +6,13 @@ var youli_service = "http://211.149.248.241:17002";
 var path = require('path');
 var fs = require('fs');
 
+var state = {
+	"yiyuyue":"已预约",
+	"wancheng":"完成",
+	"shensuzhong":"申诉中",
+	"yiqueren":"已确认",
+	"yijujue":"已拒绝"
+};
 var state_map = {
 	"edit" : "新建",
 	"shelve" : "上架",
@@ -122,7 +129,7 @@ var yijujue = function(id,cb){
 };
 //获取商家申诉项目
 var shensuzhong = function(id,cb){
-	var url = youli_service + "/shop/orders/shensuzhong?tenant_id=" + id;
+	var url = youli_service + "/shop/orders/is_shensu?tenant_id=" + id;
 	do_get_method(url,cb);
 };
 //获取项目详细数量
@@ -857,7 +864,9 @@ exports.register = function(server, options, next){
 							console.log("rows:"+JSON.stringify(rows));
 							if (!err) {
 								if (rows.success) {
-									console.log(rows);
+									for (var i = 0; i < rows.length; i++) {
+										rows.rows[i].state = state[rows.rows[i].state];
+									}
 									return reply.view("shensuzhong",{"rows":rows.rows,"results":results,"service_info":service_info});
 								}else {
 									return reply({"success":false,"message":"search wrong","service_info":service_info});
