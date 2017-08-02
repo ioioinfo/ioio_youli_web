@@ -197,20 +197,27 @@
 					</p>
 			</div>
 		</span>
-		<div class="operation"><p data-id="{{project_info.id}}" class="sure">确认</p><p data-id="{{project_info.id}}" class="refuse">拒绝</p></div>
-			<span>jdsfoisjo</span>
-		</p>
+		<div class="operation">
+			{% if project_info.state =="申诉中" %}
+			<p data-id="{{project_info.id}}" class="sure">确认</p>
+			<p data-id="{{project_info.id}}" class="refuse">拒绝</p>
+			{% else %}
+			<p>{{project_info.state}}</p>
+			{% endif %}
+		</div>
 	  </div>
-	  <div class="alertWrap">
-	  	<p class="alertTitle">系统提示</p>
-	  	<p class="alertInfor">是否确认拒绝？</p>
-	  	<p class="alertSubmit">
-	  		 <span class="button button-action alertSubmitNo">取 消</span>
-	  		 <span class="button button-action alertSubmitYes">确 认</span>
-	  	 </p>
-	  </div>
+
 	{% endfor %}
 {% endif %}
+</div>
+
+<div class="alertWrap">
+	<p class="alertTitle">拒绝返利</p>
+	<p class="alertInfor"><textarea class="alertInfor_text" rows="3" cols="36"></textarea></p>
+	<p class="alertSubmit">
+		 <span class="button button-action alertSubmitNo">取 消</span>
+		 <span class="button button-action alertSubmitYes">确 认</span>
+	 </p>
 </div>
 <div class="jine_info" style="display:none;">
   <div class="weui_mask"></div>
@@ -241,24 +248,34 @@
 <script>
 	$(function() {
 		var state = 1;
+
 		$(".refuse").click(function(){
-			if(!confirm("是否要确认拒绝？")){
-				return;
-			}
+			$(".alertWrap").show();
 			var id = $(this).data("id");
-			var reason = "根本没消费";
-			if (!id || !reason) {
-				return;
-			}
-			$.post("/refuse",{id:id,reason:reason},function(data){
-				if (data.success) {
-					alert("成功！");
-					location.href = "/daiqueren";
-				}else {
-					alert(data.message);
+			$(".alertSubmitYes").click(function(){
+
+
+				var reason = $(".alertInfor_text").val();
+				if (!id || !reason) {
+					alert("输入原因");
+					return;
 				}
+				$.post("/refuse",{id:id,reason:reason},function(data){
+					if (data.success) {
+						alert("成功！");
+						$(".alertWrap").hide();
+						$(".layout_toumingceng").hide();
+						location.href = "/daiqueren";
+					}else {
+						alert(data.message);
+					}
+				});
 			});
-		});
+		})
+		$(".alertSubmitNo").click(function(){
+			$(".alertWrap").hide();
+		})
+
 		$(".fan4").addClass("bottom-ul-style");
 		$(".sure").click(function(){
 			var project_subscribe_id = $(this).data("id");
@@ -289,6 +306,9 @@
 					}
 				})
 			});
+
+
+
 			$("#jine_cancel").click(function(){
 				$(".jine_info").attr("style","display:none;");
 			});
@@ -299,10 +319,6 @@
 			$(".layout_toumingceng").show();
 		});
 		$(".alertSubmitNo").click(function(){
-			$(".alertWrap").hide();
-			$(".layout_toumingceng").hide();
-		});
-		$(".alertSubmitYes").click(function(){
 			$(".alertWrap").hide();
 			$(".layout_toumingceng").hide();
 		});
