@@ -861,10 +861,10 @@ exports.register = function(server, options, next){
 				search_projects_infos(id,user_id,function(err,results){
 					if (!err) {
 						shensuzhong(id, function(err,rows){
-							console.log("rows:"+JSON.stringify(rows));
+
 							if (!err) {
 								if (rows.success) {
-									for (var i = 0; i < rows.length; i++) {
+									for (var i = 0; i < rows.rows.length; i++) {
 										rows.rows[i].state = state[rows.rows[i].state];
 									}
 									return reply.view("shensuzhong",{"rows":rows.rows,"results":results,"service_info":service_info});
